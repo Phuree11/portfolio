@@ -14,7 +14,6 @@ window.SITE = {
   profile: {
     name: 'Phuree',                                   // ✏️ ชื่อที่แสดง
     role: { th: 'เกมดีไซเนอร์', en: 'Game Designer' },  // ✏️ ตำแหน่ง
-    org: 'Unjob Production',                          // ✏️ ทีม/บริษัท
     tagline: {                                        // ✏️ ประโยคแนะนำตัวบนสุด
       th: 'ออกแบบเกมที่เล่าเรื่องผ่านระบบ ตัวละคร และบทสนทนา',
       en: 'Designing games that tell stories through systems, characters and dialogue.'
@@ -27,8 +26,8 @@ window.SITE = {
   about: {
     bio: [                                            // ✏️ แต่ละก้อนคือ 1 ย่อหน้า
       {
-        th: 'เกมดีไซเนอร์ที่ Unjob Production ทีมนักศึกษามหาวิทยาลัยที่กำลังพัฒนาเกมแนวเล่าเรื่อง สนใจการออกแบบตัวละคร บทสนทนา และระบบเกมที่ทำให้ผู้เล่นรู้สึกถึงเรื่องราวผ่านการเล่น',
-        en: 'Game designer at Unjob Production, a team of university students building narrative-driven games. Focused on character design, dialogue, and game systems that let players feel a story through play.'
+        th: 'เกมดีไซเนอร์ที่ทำเกมแนวเล่าเรื่อง สนใจการออกแบบตัวละคร บทสนทนา และระบบเกมที่ทำให้ผู้เล่นรู้สึกถึงเรื่องราวผ่านการเล่น',
+        en: 'Game designer making narrative-driven games. Focused on character design, dialogue, and game systems that let players feel a story through play.'
       }
     ],
     skills: [                                         // ✏️ กลุ่มทักษะ / เครื่องมือ

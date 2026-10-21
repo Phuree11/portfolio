@@ -40,7 +40,7 @@
 
   /* ---------- About / Work / Contact pages ---------- */
   function renderPages() {
-    $('#hero-eyebrow').textContent = `${t(S.profile.role)} · ${S.profile.org}`;
+    $('#hero-eyebrow').textContent = t(S.profile.role);
     $('#hero-name').textContent = S.profile.name;
     $('#hero-tagline').textContent = t(S.profile.tagline);
     $('#about-bio').innerHTML = S.about.bio.map((b) => `<p>${esc(t(b))}</p>`).join('');
@@ -92,7 +92,8 @@
     const thumbs = others.map(([m, i]) => {
       const label = isVideo(m) ? `▶ ${ui('detail.video')}` : ui('detail.phSmall');
       return `<button type="button" class="tile sm" data-i="${i}" data-ph="${esc(label)}" aria-label="${esc(t(m.caption) || label)}">${isVideo(m) ? '' : `<img src="${esc(m.src)}" alt="" loading="lazy">`}</button>`;
-    }).join('');
+    }).join('') + Array.from({ length: Math.max(0, 5 - others.length) },
+      () => `<span class="tile empty" data-ph="${esc(ui('detail.phSmall'))}"></span>`).join('');
 
     const meta = [t(p.status), t(p.period)].filter(Boolean).map((v) => `<span>${esc(v)}</span>`).join('');
     const paras = [].concat(p.description || []).map((d) => `<p>${esc(t(d))}</p>`).join('');
@@ -109,7 +110,7 @@
 
     $('#v-detail').innerHTML = `
       <article class="proj">
-        <div class="d-media ${others.length ? 'multi' : 'solo'}">
+        <div class="d-media">
           <div class="tile big" data-ph="${esc(ui('detail.phBig'))}">${bigMedia(main)}</div>
           ${thumbs}
         </div>
@@ -144,6 +145,7 @@
   function show(view, navKey) {
     ['about', 'work', 'contact', 'detail'].forEach((v) => { $(`#v-${v}`).hidden = v !== view; });
     $('#nav-back').hidden = view !== 'detail';
+    $('#nav-back').classList.toggle('cur', view === 'detail');
     $$('.nav a[data-v]').forEach((a) => a.classList.toggle('cur', a.dataset.v === navKey));
     $('#top').scrollTop = 0;
     window.scrollTo(0, 0);
@@ -169,7 +171,7 @@
         if (current !== p.id) mediaIdx = 0;
         current = p.id;
         renderDetail(p);
-        show('detail', 'work');
+        show('detail', null);
         updateTitle();
         return;
       }
