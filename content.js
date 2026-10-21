@@ -19,6 +19,8 @@ window.SITE = {
       th: 'ออกแบบเกมที่เล่าเรื่องผ่านระบบ ตัวละคร และบทสนทนา',
       en: 'Designing games that tell stories through systems, characters and dialogue.'
     }
+    /* ปุ่มที่ 4 บนเมนู (เช่น Resume / CV) — ลบ // หน้าบรรทัดล่างแล้วใส่ลิงก์ ถ้าไม่ใส่จะไม่แสดง
+    , cv: { label: { th: 'เรซูเม่', en: 'CV' }, url: 'https://...' } */
   },
 
   /* ---------- เกี่ยวกับ / About ---------- */
@@ -47,70 +49,61 @@ window.SITE = {
   },
 
   /* ---------- ผลงาน / Projects ----------
-     accent: 'y' เหลือง | 'g' เขียว | 'r' แดง  (สีของเส้นนีออนบนการ์ด)
-     media:  { type:'image', src:'images/x.jpg', caption:{...} }
-             { type:'youtube', id:'VIDEO_ID' }
-             { type:'video', src:'images/clip.mp4' }                         */
+     หน้าผลงานแต่ละชิ้นเรียงตามดีไซน์ใน Figma:
+       รูป/วิดีโอ (media) → ชื่อ → สถานะ + ช่วงเวลา + บทบาท → คำอธิบาย (description)
+       → รายการ "ทำอะไรบ้าง" (did) → ปุ่มลิงก์เกม (gameLink) + ปุ่มลิงก์อื่นๆ (links)
+
+     media: { type:'image', src:'images/x.jpg', caption:{...} }
+            { type:'youtube', id:'VIDEO_ID' }
+            { type:'video', src:'images/clip.mp4' }
+       ใส่ได้หลายชิ้น (ดีไซน์ออกแบบไว้ 6 ช่อง) ชิ้นแรกเป็นภาพใหญ่ ที่เหลือเป็นภาพเล็ก กดแล้วสลับขึ้นมาเป็นภาพใหญ่
+       ถ้าไม่ใส่ media จะใช้ cover เป็นภาพเดียว                                          */
   projects: [
     {
       id: 'bar-410',                                  // ใช้ใน URL เช่น  yoursite.com/#p-bar-410
-      accent: 'y',
       title: { th: 'Bar 410', en: 'Bar 410' },
       tag: { th: 'เกมเล่าเรื่อง 2.5D แบบ Point-and-Click', en: '2.5D Point-and-Click Narrative Game' },
-      year: '2026',
-      status: { th: 'กำลังพัฒนา (ชื่อเรียกชั่วคราว)', en: 'In development (working title)' },
-      role: { th: 'เกมดีไซเนอร์ — เนื้อเรื่อง ตัวละคร บทสนทนา และระบบ', en: 'Game Designer — narrative, characters, dialogue & systems' },
-      summary: {
+      status: { th: 'กำลังพัฒนา', en: 'Ongoing' },
+      period: { th: '2025–ปัจจุบัน', en: '2025–Now' },
+      role: { th: 'เกมดีไซเนอร์', en: 'Game Designer' },
+      summary: {                                      // ข้อความสั้นบนการ์ดหน้าแรก
         th: 'เกมเล่าเรื่องในบาร์เล็กๆ ชนบทยุโรป ผู้เล่นเป็นบาร์เทนเดอร์มือใหม่ที่ได้ทำความรู้จักลูกค้าประจำ 8 คนตลอดหลายวันในเกม',
         en: 'A narrative game set in a small European countryside bar. You are a new bartender getting to know eight regulars over several in-game days.'
       },
-      cover: 'images/bar410-cover.jpg',                // ✏️ ใส่รูปปกที่นี่ (ไม่มีไฟล์ก็ไม่เป็นไร จะขึ้นกรอบว่าง)
+      cover: 'images/bar410-cover.jpg',                // ✏️ รูปปก (ไม่มีไฟล์ก็ไม่เป็นไร จะขึ้นกรอบว่าง)
       media: [
         // { type: 'image', src: 'images/bar410-01.jpg', caption: { th: 'ฉากในบาร์', en: 'Bar scene' } },
-        // { type: 'youtube', id: 'XXXXXXXXXXX' }
+        // { type: 'youtube', id: 'XXXXXXXXXXX' },
       ],
-      sections: [
+      description: [                                  // แต่ละก้อนคือ 1 ย่อหน้า
         {
-          h: { th: 'แนวคิด', en: 'Concept' },
-          p: {
-            th: 'แรงบันดาลใจจาก Coffee Talk และ VA-11 Hall-A ตัวละครทั้ง 8 มีเบื้องหลัง น้ำเสียง และกลไกป้องกันตัวเองที่ต่างกัน และมีทั้งตอนจบแบบ Best End และ Normal End ผ่านโครงสร้างข้ามเวลาหนึ่งปี',
-            en: 'Inspired by Coffee Talk and VA-11 Hall-A. All eight characters have distinct backstories, voice profiles and defense mechanisms, with both Best End and Normal End outcomes built on a one-year time skip.'
-          }
+          th: 'เกมเล่าเรื่องในบาร์เล็กๆ ชนบทยุโรป แรงบันดาลใจจาก Coffee Talk และ VA-11 Hall-A ผู้เล่นเป็นบาร์เทนเดอร์มือใหม่ที่ได้รู้จักตัวละคร 8 คน แต่ละคนมีเบื้องหลัง น้ำเสียง และกลไกป้องกันตัวเองที่ต่างกัน มีทั้งตอนจบแบบ Best End และ Normal End ผ่านโครงสร้างข้ามเวลาหนึ่งปี',
+          en: 'A narrative game set in a small European countryside bar, inspired by Coffee Talk and VA-11 Hall-A. You play a new bartender meeting eight characters, each with a distinct backstory, voice and defense mechanism, with Best End and Normal End outcomes built on a one-year time skip.'
         },
         {
-          h: { th: 'ระบบทำค็อกเทล', en: 'Cocktail crafting system' },
-          p: {
-            th: 'สัดส่วนวัตถุดิบ 10 ส่วนระหว่างแอลกอฮอล์และมิกเซอร์ พร้อมมินิเกม Shaking และ Stirring กลไกน้ำแข็ง และระบบประเมินผล Perfect / Acceptable / Fail',
-            en: 'A 10-part ingredient split between alcohol and mixers, with Shaking and Stirring mini-games, an ice mechanic, and a Perfect / Acceptable / Fail rating system.'
-          }
-        },
-        {
-          h: { th: 'เวิร์กโฟลว์บทสนทนา', en: 'Dialogue workflow' },
-          p: {
-            th: 'เขียนด้วย Yarn Spinner โดยวางรูปแบบการตั้งชื่อ node และการติดแท็กบรรทัดไว้ให้ทั้งนักเขียนและโปรแกรมเมอร์ทำงานร่วมกันได้',
-            en: 'Written in Yarn Spinner with a node-naming convention and line-tagging format so writers and programmers can work from the same scripts.'
-          }
-        },
-        {
-          h: { th: 'สถานะตอนนี้', en: 'Current status' },
-          p: {
-            th: 'เดโมครอบคลุมวันที่ 1–5 บทของวันที่ 1 เสร็จแล้ว กำลังเตรียมตัวสำหรับการเปิดตัวบน Steam',
-            en: 'The demo covers Days 1–5. Day 1 dialogue is written, and the team is preparing for Steam visibility milestones.'
-          }
+          th: 'ตอนนี้เดโมครอบคลุมวันที่ 1–5 บทสนทนาของวันที่ 1 เขียนเสร็จแล้ว',
+          en: 'The demo currently covers Days 1–5, and the Day 1 dialogue is written.'
         }
       ],
-      links: [
-        // { label: { th: 'หน้า Steam', en: 'Steam page' }, url: 'https://store.steampowered.com/app/...' }
+      did: [                                          // "ทำอะไรบ้าง" — ทีละข้อ
+        { th: 'ออกแบบเนื้อเรื่องและตัวละครทั้ง 8 ตัว: เบื้องหลัง น้ำเสียง กลไกป้องกันตัวเอง และตอนจบ', en: 'Narrative design and eight characters: backstories, voice, defense mechanisms and endings' },
+        { th: 'ออกแบบระบบทำค็อกเทล: สัดส่วน 10 ส่วน มินิเกม Shaking/Stirring กลไกน้ำแข็ง และระบบ Perfect/Acceptable/Fail', en: 'Cocktail crafting system: 10-part split, Shaking/Stirring mini-games, ice mechanic and Perfect/Acceptable/Fail rating' },
+        { th: 'เขียนบทสนทนาด้วย Yarn Spinner พร้อมกำหนดรูปแบบการตั้งชื่อ node และแท็กบรรทัดให้นักเขียนกับโปรแกรมเมอร์ใช้ร่วมกัน', en: 'Dialogue in Yarn Spinner with a node-naming and line-tagging format shared by writers and programmers' },
+        { th: 'วางแผน Roadmap ของโปรเจกต์', en: 'Project roadmap planning' }
+      ],
+      gameLink: { url: '' },                          // ✏️ ลิงก์เกม (เช่น Steam / itch.io) — ว่างไว้ = ปุ่มสีจาง กดไม่ได้
+      links: [                                        // ✏️ ปุ่มลิงก์อื่นๆ — ถ้าไม่ใส่ url จะไม่แสดงปุ่ม
+        { label: { th: 'ลิงก์ Figma', en: 'Link to Figma' }, url: '' },
+        { label: { th: 'ลิงก์ GDD',   en: 'Link to GDD'   }, url: '' }
       ]
     },
 
     {
       id: 'project-02',
-      accent: 'g',
       title: { th: 'ชื่อผลงานที่ 2', en: 'Project Two' },
       tag: { th: 'ตัวอย่าง — แก้ไขที่ content.js', en: 'SAMPLE — edit in content.js' },
-      year: '2025',
       status: { th: 'เสร็จสมบูรณ์', en: 'Completed' },
+      period: { th: '2025', en: '2025' },
       role: { th: 'บทบาทของคุณ', en: 'Your role' },
       summary: {
         th: 'เขียนสรุป 1–2 ประโยค: เกมนี้คืออะไร และคุณแก้ปัญหาอะไรในฐานะดีไซเนอร์',
@@ -118,21 +111,23 @@ window.SITE = {
       },
       cover: 'images/project02-cover.jpg',
       media: [],
-      sections: [
-        { h: { th: 'ปัญหา', en: 'Problem' }, p: { th: 'ผู้เล่นหรือทีมเจอปัญหาอะไร', en: 'What problem did players or the team face?' } },
-        { h: { th: 'สิ่งที่ทำ', en: 'Process' }, p: { th: 'ขั้นตอนการออกแบบ เช่น prototype, playtest, ปรับแก้', en: 'Design steps: prototype, playtest, iteration.' } },
-        { h: { th: 'ผลลัพธ์', en: 'Result' }, p: { th: 'ผลที่เกิดขึ้น ตัวเลข หรือฟีดแบ็กจากผู้เล่น', en: 'What changed: numbers or player feedback.' } }
+      description: [
+        { th: 'อธิบายเกม ปัญหาที่เจอ และผลลัพธ์ของการออกแบบ', en: 'Describe the game, the problem, and the result of your design.' }
       ],
+      did: [
+        { th: 'สิ่งที่คุณทำข้อที่ 1', en: 'What you did, item 1' },
+        { th: 'สิ่งที่คุณทำข้อที่ 2', en: 'What you did, item 2' }
+      ],
+      gameLink: { url: '' },
       links: []
     },
 
     {
       id: 'project-03',
-      accent: 'r',
       title: { th: 'ชื่อผลงานที่ 3', en: 'Project Three' },
       tag: { th: 'ตัวอย่าง — แก้ไขที่ content.js', en: 'SAMPLE — edit in content.js' },
-      year: '2025',
       status: { th: 'ต้นแบบ', en: 'Prototype' },
+      period: { th: '2025', en: '2025' },
       role: { th: 'บทบาทของคุณ', en: 'Your role' },
       summary: {
         th: 'ผลงานชิ้นที่ 3 อาจเป็น game jam, prototype หรือเอกสารดีไซน์ (GDD) ก็ได้',
@@ -140,9 +135,13 @@ window.SITE = {
       },
       cover: 'images/project03-cover.jpg',
       media: [],
-      sections: [
-        { h: { th: 'รายละเอียด', en: 'Details' }, p: { th: 'อธิบายสั้นๆ ว่าคุณทำอะไร', en: 'Briefly explain what you did.' } }
+      description: [
+        { th: 'อธิบายสั้นๆ ว่าคุณทำอะไร', en: 'Briefly explain what you did.' }
       ],
+      did: [
+        { th: 'สิ่งที่คุณทำ', en: 'What you did' }
+      ],
+      gameLink: { url: '' },
       links: []
     }
   ],
@@ -163,12 +162,18 @@ window.SITE = {
 
   /* ---------- ข้อความเมนู/ปุ่ม (ปกติไม่ต้องแก้) ---------- */
   ui: {
-    nav:      { projects: { th: 'ผลงาน', en: 'Projects' }, about: { th: 'เกี่ยวกับ', en: 'About' }, contact: { th: 'ติดต่อ', en: 'Contact' } },
-    hero:     { viewWork: { th: 'ดูผลงาน', en: 'View work' }, contactMe: { th: 'ติดต่อ', en: 'Get in touch' } },
-    projects: { title: { th: 'ผลงาน', en: 'Selected Work' }, open: { th: 'ดูรายละเอียด', en: 'Case study' }, empty: { th: 'ยังไม่มีผลงาน', en: 'No projects yet' } },
-    about:    { title: { th: 'เกี่ยวกับ', en: 'About' } },
-    contact:  { title: { th: 'ติดต่อ', en: 'Contact' } },
-    modal:    { role: { th: 'บทบาท', en: 'Role' }, year: { th: 'ปี', en: 'Year' }, status: { th: 'สถานะ', en: 'Status' }, close: { th: 'ปิด', en: 'Close' }, links: { th: 'ลิงก์', en: 'Links' }, noImage: { th: 'ยังไม่มีรูป', en: 'No image yet' } },
-    footer:   { top: { th: 'กลับขึ้นบน ↑', en: 'Back to top ↑' } }
+    nav:    { about: { th: 'เกี่ยวกับ', en: 'About' }, work: { th: 'ผลงาน', en: 'Work' }, contact: { th: 'ติดต่อ', en: 'Contact' }, back: { th: 'ย้อนกลับ', en: 'Back' } },
+    hero:   { viewWork: { th: 'ดูผลงาน', en: 'View work' }, contactMe: { th: 'ติดต่อ', en: 'Get in touch' } },
+    work:   { title: { th: 'ผลงาน', en: 'Work' }, empty: { th: 'ยังไม่มีผลงาน', en: 'No projects yet' } },
+    about:  { title: { th: 'เกี่ยวกับ', en: 'About' } },
+    contact:{ title: { th: 'ติดต่อ', en: 'Contact' } },
+    detail: {
+      description: { th: 'รายละเอียด', en: 'Description' },
+      linkGame:    { th: 'ลิงก์เกม', en: 'Link Game' },
+      phBig:       { th: 'รูป/วิดีโอ', en: 'Image / Video' },
+      phSmall:     { th: 'รูป', en: 'Image' },
+      video:       { th: 'วิดีโอ', en: 'Video' }
+    },
+    footer: { top: { th: 'กลับขึ้นบน ↑', en: 'Back to top ↑' } }
   }
 };

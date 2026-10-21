@@ -20,52 +20,54 @@
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const safeUrl = (u) => (/^(https?:|mailto:|tel:|\.?\/|#)/i.test(u) ? u : '#');
 
-  const visibleProjects = () => S.projects.filter((p) => !p.hidden);
+  const projects = () => S.projects.filter((p) => !p.hidden);
+  const mediaOf = (p) => (p.media && p.media.length ? p.media : (p.cover ? [{ type: 'image', src: p.cover }] : []));
+  const isVideo = (m) => m.type === 'youtube' || m.type === 'video';
 
-  /* ---------- render ---------- */
-  function renderStatic() {
+  /* ---------- shared chrome (nav labels, hero, footer, switch) ---------- */
+  function renderChrome() {
     document.documentElement.lang = lang;
-    document.title = `${S.profile.name} — ${t(S.profile.role)}`;
-
     $$('[data-i18n]').forEach((el) => { el.textContent = ui(el.dataset.i18n); });
-    $$('.top [data-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
 
-    $('#brand').textContent = S.profile.name.toUpperCase();
+    const sw = $('#langsw');
+    sw.setAttribute('aria-checked', String(lang === 'th'));
+    $$('.lt', sw).forEach((el) => el.classList.toggle('on', el.dataset.l === lang));
+
+    const cv = S.profile.cv, cvLink = $('#nav-cv');
+    if (cv && cv.url) { cvLink.hidden = false; cvLink.href = safeUrl(cv.url); cvLink.textContent = t(cv.label) || 'CV'; }
+    else cvLink.hidden = true;
+
     $('#hero-eyebrow').textContent = `${t(S.profile.role)} · ${S.profile.org}`;
     $('#hero-name').textContent = S.profile.name;
     $('#hero-tagline').textContent = t(S.profile.tagline);
     $('#foot-text').textContent = `© ${new Date().getFullYear()} ${S.profile.name} — ${S.profile.org}`;
   }
 
-  function renderProjects() {
-    const list = visibleProjects();
+  /* ---------- home ---------- */
+  function renderHome() {
+    const list = projects();
     const grid = $('#project-grid');
-    if (!list.length) { grid.innerHTML = `<p class="empty">${esc(ui('projects.empty'))}</p>`; return; }
-
-    grid.innerHTML = list.map((p, i) => `
-      <button type="button" class="card a-${esc(p.accent || 'y')}" data-id="${esc(p.id)}">
-        <span class="cover" data-empty="${esc(ui('modal.noImage'))}">
-          ${p.cover ? `<img src="${esc(p.cover)}" alt="" loading="lazy">` : ''}
-        </span>
+    grid.innerHTML = list.length ? list.map((p) => {
+      const meta = [t(p.status), t(p.period)].filter(Boolean).map((v) => `<span>${esc(v)}</span>`).join('');
+      return `
+      <a class="card" href="#p-${esc(p.id)}">
+        <span class="tile thumb" data-ph="${esc(ui('detail.phSmall'))}">${p.cover ? `<img src="${esc(p.cover)}" alt="" loading="lazy">` : ''}</span>
         <span class="c-body">
-          <span class="c-meta"><span class="c-no">${String(i + 1).padStart(2, '0')}</span><span class="c-tag">${esc(t(p.tag))}</span></span>
           <span class="c-title">${esc(t(p.title))}</span>
+          <span class="c-meta">${meta}</span>
+          <span class="c-tag">${esc(t(p.tag))}</span>
           <span class="c-sum">${esc(t(p.summary))}</span>
-          <span class="c-open">${esc(ui('projects.open'))} →</span>
         </span>
-      </button>`).join('');
-  }
+      </a>`;
+    }).join('') : `<p class="empty">${esc(ui('work.empty'))}</p>`;
 
-  function renderAbout() {
     $('#about-bio').innerHTML = S.about.bio.map((b) => `<p>${esc(t(b))}</p>`).join('');
     $('#about-skills').innerHTML = S.about.skills.map((g) => `
       <div class="sk-group">
         <h3>${esc(t(g.title))}</h3>
         <ul>${g.items.map((it) => `<li>${esc(t(it))}</li>`).join('')}</ul>
       </div>`).join('');
-  }
 
-  function renderContact() {
     $('#contact-lead').textContent = t(S.contact.lead);
     $('#contact-list').innerHTML = S.contact.items.map((c) => `
       <li><a href="${esc(safeUrl(c.url))}" target="_blank" rel="noopener">
@@ -73,99 +75,128 @@
       </a></li>`).join('');
   }
 
-  function mediaHtml(m) {
-    if (m.type === 'youtube') {
-      return `<figure class="media vid"><iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(m.id)}" title="video" loading="lazy" allowfullscreen></iframe></figure>`;
-    }
-    if (m.type === 'video') {
-      return `<figure class="media vid"><video src="${esc(m.src)}" controls muted playsinline preload="metadata"></video></figure>`;
-    }
-    return `<figure class="media" data-empty="${esc(ui('modal.noImage'))}"><img src="${esc(m.src)}" alt="${esc(t(m.caption))}" loading="lazy">${m.caption ? `<figcaption>${esc(t(m.caption))}</figcaption>` : ''}</figure>`;
+  /* ---------- project page ---------- */
+  let current = null;   // id of the project being shown
+  let mediaIdx = 0;     // which media item is in the big slot
+
+  function bigMedia(m) {
+    if (!m) return '';
+    if (m.type === 'youtube') return `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(m.id)}" title="${esc(t(m.caption) || 'video')}" loading="lazy" allowfullscreen></iframe>`;
+    if (m.type === 'video') return `<video src="${esc(m.src)}" controls muted playsinline preload="metadata"></video>`;
+    return `<img src="${esc(m.src)}" alt="${esc(t(m.caption))}">`;
   }
 
-  function renderModal(p) {
-    const meta = [
-      ['modal.role', t(p.role)], ['modal.year', p.year], ['modal.status', t(p.status)]
-    ].filter(([, v]) => v).map(([k, v]) => `<div><dt>${esc(ui(k))}</dt><dd>${esc(v)}</dd></div>`).join('');
+  function renderDetail(p) {
+    const list = mediaOf(p);
+    if (mediaIdx >= list.length) mediaIdx = 0;
+    const main = list[mediaIdx];
+    const others = list.map((m, i) => [m, i]).filter(([, i]) => i !== mediaIdx);
 
-    const media = (p.media && p.media.length)
-      ? p.media.map(mediaHtml).join('')
-      : (p.cover ? mediaHtml({ type: 'image', src: p.cover }) : '');
+    const thumbs = others.map(([m, i]) => {
+      const label = isVideo(m) ? `▶ ${ui('detail.video')}` : ui('detail.phSmall');
+      return `<button type="button" class="tile sm" data-i="${i}" data-ph="${esc(label)}" aria-label="${esc(t(m.caption) || label)}">${isVideo(m) ? '' : `<img src="${esc(m.src)}" alt="" loading="lazy">`}</button>`;
+    }).join('');
 
-    const links = (p.links && p.links.length)
-      ? `<div class="m-links"><h3>${esc(ui('modal.links'))}</h3>${p.links.map((l) => `<a class="btn g" href="${esc(safeUrl(l.url))}" target="_blank" rel="noopener">${esc(t(l.label))} ↗</a>`).join('')}</div>`
-      : '';
+    const meta = [t(p.status), t(p.period)].filter(Boolean).map((v) => `<span>${esc(v)}</span>`).join('');
+    const paras = [].concat(p.description || []).map((d) => `<p>${esc(t(d))}</p>`).join('');
+    const did = (p.did || []).map((d) => `<li>${esc(t(d))}</li>`).join('');
 
-    $('#m-inner').className = `m-inner a-${p.accent || 'y'}`;
-    $('#m-inner').innerHTML = `
-      <div class="m-bar">
-        <div class="lang" role="group" aria-label="Language">
-          <button type="button" data-lang="th" aria-pressed="${lang === 'th'}">TH</button><span aria-hidden="true">/</span><button type="button" data-lang="en" aria-pressed="${lang === 'en'}">EN</button>
+    const gl = p.gameLink;
+    const gameLabel = esc((gl && t(gl.label)) || ui('detail.linkGame'));
+    const game = !gl ? '' : (gl.url
+      ? `<a class="gl" href="${esc(safeUrl(gl.url))}" target="_blank" rel="noopener">${gameLabel}</a>`
+      : `<span class="gl off" aria-disabled="true">${gameLabel}</span>`);
+
+    const links = (p.links || []).filter((l) => l.url)
+      .map((l) => `<a class="lk" href="${esc(safeUrl(l.url))}" target="_blank" rel="noopener">${esc(t(l.label))}</a>`).join('');
+
+    $('#detail').innerHTML = `
+      <article class="proj">
+        <div class="d-media ${others.length ? 'multi' : 'solo'}">
+          <div class="tile big" data-ph="${esc(ui('detail.phBig'))}">${bigMedia(main)}</div>
+          ${thumbs}
         </div>
-        <button type="button" class="m-close" aria-label="${esc(ui('modal.close'))}">${esc(ui('modal.close'))} ✕</button>
-      </div>
-      <p class="m-tag">${esc(t(p.tag))}</p>
-      <h2 id="m-title">${esc(t(p.title))}</h2>
-      <p class="m-sum">${esc(t(p.summary))}</p>
-      <dl class="m-meta">${meta}</dl>
-      <div class="m-media">${media}</div>
-      <div class="m-secs">${(p.sections || []).map((s) => `<section><h3>${esc(t(s.h))}</h3><p>${esc(t(s.p))}</p></section>`).join('')}</div>
-      ${links}`;
+        <h2 class="d-title">${esc(t(p.title))}</h2>
+        <div class="d-cols">
+          <div class="d-left">
+            <p class="d-meta">${meta}</p>
+            <div class="d-desc"><p class="lab">${esc(ui('detail.description'))}</p>${paras}</div>
+            ${game}
+          </div>
+          <div class="d-right">
+            <p class="d-role">${esc(t(p.role))}</p>
+            ${did ? `<ul class="d-did">${did}</ul>` : ''}
+            ${links ? `<div class="d-links">${links}</div>` : ''}
+          </div>
+        </div>
+      </article>`;
   }
 
-  /* ---------- modal ---------- */
-  const dlg = $('#modal');
-  let openId = null;
+  $('#detail').addEventListener('click', (e) => {
+    const th = e.target.closest('.tile.sm[data-i]');
+    if (!th || !current) return;
+    mediaIdx = Number(th.dataset.i);
+    const p = S.projects.find((x) => x.id === current);
+    if (p) renderDetail(p);
+  });
 
-  function openProject(id) {
-    const p = S.projects.find((x) => x.id === id);
-    if (!p) return;
-    openId = id;
-    renderModal(p);
-    if (!dlg.open) dlg.showModal();
-    dlg.scrollTop = 0;
-    history.replaceState(null, '', `#p-${id}`);
+  /* ---------- routing: "#p-id" = project page, anything else = home ---------- */
+  let lastView = 'init';
+
+  function showDetail(p) {
+    if (current !== p.id) mediaIdx = 0;
+    current = p.id;
+    $('#home').hidden = true;
+    $('#detail').hidden = false;
+    $('#nav-back').hidden = false;
+    renderDetail(p);
+    document.title = `${t(p.title)} — ${S.profile.name}`;
+    window.scrollTo(0, 0);
+    lastView = 'detail';
   }
 
-  function closeProject() { if (dlg.open) dlg.close(); }
+  function showHome(section) {
+    current = null;
+    $('#detail').hidden = true;
+    $('#home').hidden = false;
+    $('#nav-back').hidden = true;
+    document.title = `${S.profile.name} — ${t(S.profile.role)}`;
+    const el = section && document.getElementById(section);
+    if (lastView !== 'home') {
+      requestAnimationFrame(() => (el ? el.scrollIntoView({ behavior: 'auto' }) : window.scrollTo(0, 0)));
+    }
+    lastView = 'home';
+  }
 
-  dlg.addEventListener('close', () => {
-    openId = null;
-    history.replaceState(null, '', location.pathname + location.search);
-  });
-  dlg.addEventListener('click', (e) => {
-    const lb = e.target.closest('[data-lang]');
-    if (lb) { setLang(lb.dataset.lang); return; }
-    if (e.target === dlg || e.target.closest('.m-close')) closeProject();
-  });
+  function route() {
+    let h = '';
+    try { h = decodeURIComponent(location.hash.slice(1)); } catch (_) { /* ignore */ }
+    if (h.startsWith('p-')) {
+      const p = projects().find((x) => x.id === h.slice(2));
+      if (p) { showDetail(p); return; }
+    }
+    showHome(h);
+  }
 
-  /* รูปที่โหลดไม่ได้ -> เอารูปออก ให้เห็นกรอบว่างแทน */
-  document.addEventListener('error', (e) => {
-    const el = e.target;
-    if (el && el.tagName === 'IMG') el.remove();
-  }, true);
-
-  /* ---------- events ---------- */
-  $('#project-grid').addEventListener('click', (e) => {
-    const card = e.target.closest('.card');
-    if (card) openProject(card.dataset.id);
-  });
-
+  /* ---------- language switch ---------- */
   function setLang(l) {
     lang = l;
     safeSet('lang', lang);
-    renderAll();
+    renderChrome();
+    renderHome();
+    if (current) { const p = S.projects.find((x) => x.id === current); if (p) { renderDetail(p); document.title = `${t(p.title)} — ${S.profile.name}`; } }
+    else document.title = `${S.profile.name} — ${t(S.profile.role)}`;
   }
-  $$('.top [data-lang]').forEach((b) => b.addEventListener('click', () => setLang(b.dataset.lang)));
+  $('#langsw').addEventListener('click', () => setLang(lang === 'th' ? 'en' : 'th'));
 
-  function renderAll() {
-    renderStatic();
-    renderProjects();
-    renderAbout();
-    renderContact();
-    if (openId) { const p = S.projects.find((x) => x.id === openId); if (p) renderModal(p); }
-  }
+  /* รูปที่โหลดไม่ได้ -> เอารูปออก ให้เห็นกรอบว่างแทน */
+  document.addEventListener('error', (e) => {
+    if (e.target && e.target.tagName === 'IMG') e.target.remove();
+  }, true);
 
-  renderAll();
-  if (location.hash.startsWith('#p-')) openProject(location.hash.slice(3));
+  /* ---------- start ---------- */
+  renderChrome();
+  renderHome();
+  route();
+  window.addEventListener('hashchange', route);
 })();
