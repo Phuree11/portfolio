@@ -10,28 +10,28 @@
   <meta property="og:description" content="Game designer portfolio — narrative, characters, dialogue and systems.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%232e2e2e'/%3E%3Crect x='5' width='5' height='32' fill='%2392fd64'/%3E%3Crect x='13' width='5' height='32' fill='%23e2fe64'/%3E%3Crect x='21' width='5' height='32' fill='%23fe6464'/%3E%3C/svg%3E">
   <link rel="preload" href="fonts/righteous-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
-  <!-- retro stripes (decorative): 3 bars on the left, 3 bent bands on the right -->
+  <!-- retro stripes (decorative): 3 bars on the left, 3 concentric quarter-circle bands on the right -->
   <div class="deco" aria-hidden="true">
     <i class="st g"></i><i class="st y"></i><i class="st r"></i>
-    <svg class="arcs" viewBox="1700 300 220 780" preserveAspectRatio="xMaxYMax meet" focusable="false">
-      <g fill="none" stroke-linejoin="miter" stroke-miterlimit="6">
-        <polyline stroke="#92fd64" stroke-width="38" points="1756,1100 1756,540 1768,428 1827,353 2000,353"/>
-        <polyline stroke="#e2fe64" stroke-width="37" points="1811.5,1100 1811.5,478 1838,427 2000,427"/>
-        <polyline stroke="#fe6464" stroke-width="35" points="1866.5,1100 1866.5,540 1888,508 2000,508"/>
+    <svg class="arcs" viewBox="1620 290 300 790" preserveAspectRatio="xMaxYMax meet" focusable="false">
+      <g fill="none">
+        <path stroke="#92fd64" stroke-width="38" d="M1660 1100V505A170 170 0 0 1 1830 335H2000"/>
+        <path stroke="#e2fe64" stroke-width="37" d="M1716 1100V505A114 114 0 0 1 1830 391H2000"/>
+        <path stroke="#fe6464" stroke-width="35" d="M1772 1100V505A58 58 0 0 1 1830 447H2000"/>
       </g>
     </svg>
   </div>
 
   <header class="top">
     <nav class="nav" aria-label="Main">
-      <a class="nb" href="#about" data-i18n="nav.about"></a>
-      <a class="nb" href="#work" data-i18n="nav.work"></a>
-      <a class="nb" href="#contact" data-i18n="nav.contact"></a>
+      <a class="nb" href="#about" data-v="about" data-i18n="nav.about"></a>
+      <a class="nb" href="#work" data-v="work" data-i18n="nav.work"></a>
+      <a class="nb" href="#contact" data-v="contact" data-i18n="nav.contact"></a>
       <a class="nb" id="nav-cv" href="#" target="_blank" rel="noopener" hidden></a>
-      <a class="nb on" id="nav-back" href="#work" data-i18n="nav.back" hidden></a>
+      <a class="nb" id="nav-back" href="#work" data-i18n="nav.back" hidden></a>
     </nav>
     <button type="button" class="langsw" id="langsw" role="switch" aria-checked="false" aria-label="Language: EN / TH">
       <span class="lt" data-l="en">EN</span>
@@ -41,49 +41,36 @@
   </header>
 
   <main id="top">
-    <!-- ============ HOME ============ -->
-    <div id="home">
-      <section class="hero">
-        <p class="eyebrow" id="hero-eyebrow"></p>
-        <h1 id="hero-name"></h1>
-        <div class="bars" aria-hidden="true"><i class="g"></i><i class="y"></i><i class="r"></i></div>
-        <p class="tagline" id="hero-tagline"></p>
-        <div class="cta">
-          <a class="nb auto on" href="#work" data-i18n="hero.viewWork"></a>
-          <a class="nb auto" href="#contact" data-i18n="hero.contactMe"></a>
-        </div>
-      </section>
+    <!-- ============ ABOUT (start page) ============ -->
+    <section class="view" id="v-about">
+      <p class="eyebrow" id="hero-eyebrow"></p>
+      <h1 class="name" id="hero-name"></h1>
+      <div class="bars" aria-hidden="true"><i class="g"></i><i class="y"></i><i class="r"></i></div>
+      <p class="tagline" id="hero-tagline"></p>
+      <div class="about">
+        <div class="bio" id="about-bio"></div>
+        <div class="skills" id="about-skills"></div>
+      </div>
+    </section>
 
-      <section id="work" class="sec">
-        <h2 class="h2" data-i18n="work.title"></h2>
-        <div class="grid" id="project-grid"></div>
-      </section>
+    <!-- ============ WORK ============ -->
+    <section class="view" id="v-work" hidden>
+      <h2 class="h2" data-i18n="work.title"></h2>
+      <div class="grid" id="project-grid"></div>
+    </section>
 
-      <section id="about" class="sec">
-        <h2 class="h2" data-i18n="about.title"></h2>
-        <div class="about">
-          <div class="bio" id="about-bio"></div>
-          <div class="skills" id="about-skills"></div>
-        </div>
-      </section>
-
-      <section id="contact" class="sec">
-        <h2 class="h2" data-i18n="contact.title"></h2>
-        <p class="lead" id="contact-lead"></p>
-        <ul class="contact-list" id="contact-list"></ul>
-      </section>
-    </div>
+    <!-- ============ CONTACT ============ -->
+    <section class="view" id="v-contact" hidden>
+      <h2 class="h2" data-i18n="contact.title"></h2>
+      <p class="lead" id="contact-lead"></p>
+      <ul class="contact-list" id="contact-list"></ul>
+    </section>
 
     <!-- ============ PROJECT PAGE ============ -->
-    <div id="detail" hidden></div>
+    <section class="view" id="v-detail" hidden></section>
   </main>
 
-  <footer class="foot">
-    <span id="foot-text"></span>
-    <a href="#top" data-i18n="footer.top"></a>
-  </footer>
-
-  <script src="content.js?v=3"></script>
-  <script src="app.js?v=3"></script>
+  <script src="content.js?v=4"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>

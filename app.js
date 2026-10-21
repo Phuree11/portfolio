@@ -24,7 +24,7 @@
   const mediaOf = (p) => (p.media && p.media.length ? p.media : (p.cover ? [{ type: 'image', src: p.cover }] : []));
   const isVideo = (m) => m.type === 'youtube' || m.type === 'video';
 
-  /* ---------- shared chrome (nav labels, hero, footer, switch) ---------- */
+  /* ---------- chrome: nav labels + language switch ---------- */
   function renderChrome() {
     document.documentElement.lang = lang;
     $$('[data-i18n]').forEach((el) => { el.textContent = ui(el.dataset.i18n); });
@@ -36,18 +36,22 @@
     const cv = S.profile.cv, cvLink = $('#nav-cv');
     if (cv && cv.url) { cvLink.hidden = false; cvLink.href = safeUrl(cv.url); cvLink.textContent = t(cv.label) || 'CV'; }
     else cvLink.hidden = true;
+  }
 
+  /* ---------- About / Work / Contact pages ---------- */
+  function renderPages() {
     $('#hero-eyebrow').textContent = `${t(S.profile.role)} · ${S.profile.org}`;
     $('#hero-name').textContent = S.profile.name;
     $('#hero-tagline').textContent = t(S.profile.tagline);
-    $('#foot-text').textContent = `© ${new Date().getFullYear()} ${S.profile.name} — ${S.profile.org}`;
-  }
+    $('#about-bio').innerHTML = S.about.bio.map((b) => `<p>${esc(t(b))}</p>`).join('');
+    $('#about-skills').innerHTML = S.about.skills.map((g) => `
+      <div class="sk-group">
+        <h3>${esc(t(g.title))}</h3>
+        <ul>${g.items.map((it) => `<li>${esc(t(it))}</li>`).join('')}</ul>
+      </div>`).join('');
 
-  /* ---------- home ---------- */
-  function renderHome() {
     const list = projects();
-    const grid = $('#project-grid');
-    grid.innerHTML = list.length ? list.map((p) => {
+    $('#project-grid').innerHTML = list.length ? list.map((p) => {
       const meta = [t(p.status), t(p.period)].filter(Boolean).map((v) => `<span>${esc(v)}</span>`).join('');
       return `
       <a class="card" href="#p-${esc(p.id)}">
@@ -60,13 +64,6 @@
         </span>
       </a>`;
     }).join('') : `<p class="empty">${esc(ui('work.empty'))}</p>`;
-
-    $('#about-bio').innerHTML = S.about.bio.map((b) => `<p>${esc(t(b))}</p>`).join('');
-    $('#about-skills').innerHTML = S.about.skills.map((g) => `
-      <div class="sk-group">
-        <h3>${esc(t(g.title))}</h3>
-        <ul>${g.items.map((it) => `<li>${esc(t(it))}</li>`).join('')}</ul>
-      </div>`).join('');
 
     $('#contact-lead').textContent = t(S.contact.lead);
     $('#contact-list').innerHTML = S.contact.items.map((c) => `
@@ -110,7 +107,7 @@
     const links = (p.links || []).filter((l) => l.url)
       .map((l) => `<a class="lk" href="${esc(safeUrl(l.url))}" target="_blank" rel="noopener">${esc(t(l.label))}</a>`).join('');
 
-    $('#detail').innerHTML = `
+    $('#v-detail').innerHTML = `
       <article class="proj">
         <div class="d-media ${others.length ? 'multi' : 'solo'}">
           <div class="tile big" data-ph="${esc(ui('detail.phBig'))}">${bigMedia(main)}</div>
@@ -132,7 +129,7 @@
       </article>`;
   }
 
-  $('#detail').addEventListener('click', (e) => {
+  $('#v-detail').addEventListener('click', (e) => {
     const th = e.target.closest('.tile.sm[data-i]');
     if (!th || !current) return;
     mediaIdx = Number(th.dataset.i);
@@ -140,32 +137,27 @@
     if (p) renderDetail(p);
   });
 
-  /* ---------- routing: "#p-id" = project page, anything else = home ---------- */
-  let lastView = 'init';
+  /* ---------- routing: one screen at a time ----------
+     #about (default) | #work | #contact | #p-<id> (project page) */
+  const PAGES = ['about', 'work', 'contact'];
 
-  function showDetail(p) {
-    if (current !== p.id) mediaIdx = 0;
-    current = p.id;
-    $('#home').hidden = true;
-    $('#detail').hidden = false;
-    $('#nav-back').hidden = false;
-    renderDetail(p);
-    document.title = `${t(p.title)} — ${S.profile.name}`;
+  function show(view, navKey) {
+    ['about', 'work', 'contact', 'detail'].forEach((v) => { $(`#v-${v}`).hidden = v !== view; });
+    $('#nav-back').hidden = view !== 'detail';
+    $$('.nav a[data-v]').forEach((a) => a.classList.toggle('cur', a.dataset.v === navKey));
+    $('#top').scrollTop = 0;
     window.scrollTo(0, 0);
-    lastView = 'detail';
   }
 
-  function showHome(section) {
-    current = null;
-    $('#detail').hidden = true;
-    $('#home').hidden = false;
-    $('#nav-back').hidden = true;
-    document.title = `${S.profile.name} — ${t(S.profile.role)}`;
-    const el = section && document.getElementById(section);
-    if (lastView !== 'home') {
-      requestAnimationFrame(() => (el ? el.scrollIntoView({ behavior: 'auto' }) : window.scrollTo(0, 0)));
+  function updateTitle() {
+    if (current) {
+      const p = S.projects.find((x) => x.id === current);
+      if (p) { document.title = `${t(p.title)} — ${S.profile.name}`; return; }
     }
-    lastView = 'home';
+    const page = PAGES.find((v) => !$(`#v-${v}`).hidden) || 'about';
+    document.title = page === 'about'
+      ? `${S.profile.name} — ${t(S.profile.role)}`
+      : `${ui('nav.' + page)} — ${S.profile.name}`;
   }
 
   function route() {
@@ -173,9 +165,19 @@
     try { h = decodeURIComponent(location.hash.slice(1)); } catch (_) { /* ignore */ }
     if (h.startsWith('p-')) {
       const p = projects().find((x) => x.id === h.slice(2));
-      if (p) { showDetail(p); return; }
+      if (p) {
+        if (current !== p.id) mediaIdx = 0;
+        current = p.id;
+        renderDetail(p);
+        show('detail', 'work');
+        updateTitle();
+        return;
+      }
     }
-    showHome(h);
+    current = null;
+    const page = PAGES.includes(h) ? h : 'about';
+    show(page, page);
+    updateTitle();
   }
 
   /* ---------- language switch ---------- */
@@ -183,9 +185,9 @@
     lang = l;
     safeSet('lang', lang);
     renderChrome();
-    renderHome();
-    if (current) { const p = S.projects.find((x) => x.id === current); if (p) { renderDetail(p); document.title = `${t(p.title)} — ${S.profile.name}`; } }
-    else document.title = `${S.profile.name} — ${t(S.profile.role)}`;
+    renderPages();
+    if (current) { const p = S.projects.find((x) => x.id === current); if (p) renderDetail(p); }
+    updateTitle();
   }
   $('#langsw').addEventListener('click', () => setLang(lang === 'th' ? 'en' : 'th'));
 
@@ -196,7 +198,7 @@
 
   /* ---------- start ---------- */
   renderChrome();
-  renderHome();
+  renderPages();
   route();
   window.addEventListener('hashchange', route);
 })();
