@@ -3,27 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Phuree — Game Designer</title>
+  <title>Phuree Sirikunchukit — Game Designer</title>
   <meta name="description" content="Game designer portfolio — narrative, characters, dialogue and systems.">
-  <meta name="theme-color" content="#2e2e2e">
-  <meta property="og:title" content="Phuree — Game Designer">
+  <meta name="theme-color" content="#000000">
+  <meta property="og:title" content="Phuree Sirikunchukit — Game Designer">
   <meta property="og:description" content="Game designer portfolio — narrative, characters, dialogue and systems.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%232e2e2e'/%3E%3Crect x='5' width='5' height='32' fill='%2392fd64'/%3E%3Crect x='13' width='5' height='32' fill='%23e2fe64'/%3E%3Crect x='21' width='5' height='32' fill='%23fe6464'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23959595' stroke-width='1.5'/%3E%3Ccircle cx='24' cy='8.5' r='4' fill='%236ba8dd'/%3E%3C/svg%3E">
   <link rel="preload" href="fonts/righteous-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
-  <!-- retro stripes (decorative): 3 bars on the left, 3 concentric quarter-circle bands on the right -->
-  <div class="deco" aria-hidden="true">
-    <i class="st g"></i><i class="st y"></i><i class="st r"></i>
-    <svg class="arcs" viewBox="1620 290 300 790" preserveAspectRatio="xMaxYMax meet" focusable="false">
-      <g fill="none">
-        <path stroke="#92fd64" stroke-width="38" d="M1660 1100V505A170 170 0 0 1 1830 335H2000"/>
-        <path stroke="#e2fe64" stroke-width="37" d="M1716 1100V505A114 114 0 0 1 1830 391H2000"/>
-        <path stroke="#fe6464" stroke-width="35" d="M1772 1100V505A58 58 0 0 1 1830 447H2000"/>
-      </g>
-    </svg>
-  </div>
+  <!-- space background: each page has its own set of orbits; app.js draws them and fades between pages -->
+  <div class="space" id="space" aria-hidden="true"></div>
 
   <header class="top">
     <nav class="nav" aria-label="Main">
@@ -41,36 +32,39 @@
   </header>
 
   <main id="top">
-    <!-- ============ ABOUT (start page) ============ -->
-    <section class="view" id="v-about">
-      <p class="eyebrow" id="hero-eyebrow"></p>
-      <h1 class="name" id="hero-name"></h1>
-      <div class="bars" aria-hidden="true"><i class="g"></i><i class="y"></i><i class="r"></i></div>
-      <p class="tagline" id="hero-tagline"></p>
-      <div class="about">
-        <div class="bio" id="about-bio"></div>
-        <div class="skills" id="about-skills"></div>
-      </div>
+    <!-- ============ OPENING ============ -->
+    <section class="view" id="v-home">
+      <h1 class="hello">
+        <span class="hello-name" id="home-name"></span>
+        <span class="hello-role" id="home-role"></span>
+      </h1>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="view" id="v-about" hidden>
+      <h2 class="a-name" id="about-name"></h2>
+      <p class="a-role" id="about-role"></p>
+      <div class="a-bio" id="about-bio"></div>
+      <div class="a-cols" id="about-skills"></div>
     </section>
 
     <!-- ============ WORK ============ -->
     <section class="view" id="v-work" hidden>
-      <h2 class="h2" data-i18n="work.title"></h2>
+      <h2 class="sr" data-i18n="work.title"></h2>
       <div class="grid" id="project-grid"></div>
     </section>
 
     <!-- ============ CONTACT ============ -->
     <section class="view" id="v-contact" hidden>
-      <h2 class="h2" data-i18n="contact.title"></h2>
-      <p class="lead" id="contact-lead"></p>
-      <ul class="contact-list" id="contact-list"></ul>
+      <h2 class="sr" data-i18n="contact.title"></h2>
+      <div id="contact-groups"></div>
     </section>
 
-    <!-- ============ PROJECT PAGE ============ -->
+    <!-- ============ PROJECT PAGE (not redesigned yet) ============ -->
     <section class="view" id="v-detail" hidden></section>
   </main>
 
-  <script src="content.js?v=5"></script>
-  <script src="app.js?v=5"></script>
+  <script src="content.js?v=6"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>

@@ -12,7 +12,8 @@ window.SITE = {
 
   /* ---------- ข้อมูลส่วนตัว / Profile ---------- */
   profile: {
-    name: 'Phuree',                                   // ✏️ ชื่อที่แสดง
+    name: 'Phuree',                                   // ✏️ ชื่อเล่น/ชื่อสั้น (หน้า About)
+    fullName: 'Phuree Sirikunchukit',                 // ✏️ ชื่อเต็ม (หน้าเปิด)
     role: { th: 'เกมดีไซเนอร์', en: 'Game Designer' },  // ✏️ ตำแหน่ง
     tagline: {                                        // ✏️ ประโยคแนะนำตัวบนสุด
       th: 'ออกแบบเกมที่เล่าเรื่องผ่านระบบ ตัวละคร และบทสนทนา',
@@ -148,14 +149,25 @@ window.SITE = {
   /* ---------- ช่องทางติดต่อ / Contact ----------
      ⚠️ เปลี่ยนค่าตัวอย่างเหล่านี้ก่อนเผยแพร่จริง! */
   contact: {
-    lead: {
-      th: 'สนใจคุยเรื่องเกม ทีม หรือโอกาสร่วมงาน ทักมาได้เลย',
-      en: 'Interested in games, teams, or working together? Say hello.'
-    },
-    items: [
-      { label: 'Email',    value: 'your@email.com',            url: 'mailto:your@email.com' },
-      { label: 'LinkedIn', value: 'linkedin.com/in/your-name', url: 'https://linkedin.com/in/your-name' },
-      { label: 'Itch.io',  value: 'your-name.itch.io',         url: 'https://your-name.itch.io' }
+    /* แต่ละกลุ่ม = หัวข้อ 1 อัน + แถวช่องทางติดต่อ (ไม่มีแถว = ไม่แสดงกลุ่มนั้น)
+       แถว: { label: 'ชื่อช่องทาง', value: 'ข้อความที่โชว์', url: 'ลิงก์' }            */
+    groups: [
+      {
+        title: { th: 'ติดต่องาน', en: 'For Work' },
+        items: [
+          { label: 'Email',    value: 'Phuree11@gmail.com',        url: 'mailto:Phuree11@gmail.com' },
+          { label: 'LinkedIn', value: 'linkedin.com/in/your-name', url: 'https://linkedin.com/in/your-name' },  // ✏️ แก้หรือลบ
+          { label: 'Itch.io',  value: 'your-name.itch.io',         url: 'https://your-name.itch.io' }            // ✏️ แก้หรือลบ
+        ]
+      },
+      {
+        title: { th: 'ส่วนตัว', en: 'Personal' },
+        items: [
+          /* { label: 'Facebook', value: '...', url: 'https://facebook.com/...' },
+             { label: 'IG',       value: '@...', url: 'https://instagram.com/...' },
+             { label: 'Line',     value: '...',  url: 'https://line.me/ti/p/~...' } */
+        ]
+      }
     ]
   },
 
