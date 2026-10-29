@@ -12,14 +12,14 @@ window.SITE = {
 
   /* ---------- ข้อมูลส่วนตัว / Profile ---------- */
   profile: {
-    name: 'Phuree',                                   // ✏️ ชื่อเล่น/ชื่อสั้น (หน้า About)
+    name: 'Phuree',                                   // ✏️ ชื่อสั้น (หน้า About)
     fullName: 'Phuree Sirikunchukit',                 // ✏️ ชื่อเต็ม (หน้าเปิด)
     role: { th: 'เกมดีไซเนอร์', en: 'Game Designer' },  // ✏️ ตำแหน่ง
-    tagline: {                                        // ✏️ ประโยคแนะนำตัวบนสุด
-      th: 'ออกแบบเกมที่เล่าเรื่องผ่านระบบ ตัวละคร และบทสนทนา',
-      en: 'Designing games that tell stories through systems, characters and dialogue.'
+    tagline: {
+      th: 'ออกแบบเกมที่ผู้เล่นสนุก และเล่าเรื่องที่อยากเล่า',
+      en: 'Crafting games players enjoy and stories worth telling.'
     }
-    /* ปุ่มที่ 4 บนเมนู (เช่น Resume / CV) — ลบ // หน้าบรรทัดล่างแล้วใส่ลิงก์ ถ้าไม่ใส่จะไม่แสดง
+    /* ปุ่มเมนูเพิ่ม (เช่น Resume / CV) — ลบ // แล้วใส่ลิงก์ ถ้าไม่ใส่จะไม่แสดง
     , cv: { label: { th: 'เรซูเม่', en: 'CV' }, url: 'https://...' } */
   },
 
@@ -27,145 +27,205 @@ window.SITE = {
   about: {
     bio: [                                            // ✏️ แต่ละก้อนคือ 1 ย่อหน้า
       {
-        th: 'เกมดีไซเนอร์ที่ทำเกมแนวเล่าเรื่อง สนใจการออกแบบตัวละคร บทสนทนา และระบบเกมที่ทำให้ผู้เล่นรู้สึกถึงเรื่องราวผ่านการเล่น',
-        en: 'Game designer making narrative-driven games. Focused on character design, dialogue, and game systems that let players feel a story through play.'
+        th: 'สวัสดีครับ ผมเป็นนักศึกษาปี 3 สาขา Game Design วิทยาลัยศิลปะ สื่อ และเทคโนโลยี (CAMT) มหาวิทยาลัยเชียงใหม่ ผมอยากสร้างเกมที่ผู้เล่นสนุกจริงๆ และเล่าเรื่องที่ผมรักจะเล่า เพื่อส่งต่อความรู้สึกตื่นตาตื่นใจแบบเดียวกับที่ผมได้รับตอนก้าวเข้าสู่โลกของวิดีโอเกมครั้งแรก',
+        en: 'Hi, I’m a third-year Game Design student at CAMT, Chiang Mai University. Driven by a passion to craft games that players truly enjoy and stories I love to tell, I want to recreate that same spark of wonder I felt the very first time I stepped into the world of video games.'
       }
     ],
-    skills: [                                         // ✏️ กลุ่มทักษะ / เครื่องมือ
+    skills: [                                         // ✏️ กลุ่มทักษะ / เครื่องมือ (2 คอลัมน์)
       {
         title: { th: 'ทักษะ', en: 'Skills' },
         items: [
-          { th: 'ออกแบบตัวละครและเนื้อเรื่อง', en: 'Narrative & character design' },
-          { th: 'ออกแบบระบบเกม', en: 'Systems design' },
-          { th: 'เขียนบทสนทนาในเกม', en: 'Dialogue writing' },
-          { th: 'วางแผนโปรเจกต์และ Roadmap', en: 'Project planning & roadmap' }
+          { th: 'ออกแบบกลไกเกมและระบบ', en: 'Gameplay Mechanics & Systems Design' },
+          { th: 'เขียน Game Design Document', en: 'Game Design Document' },
+          { th: 'ออกแบบเรื่องเล่า (Narrative Design)', en: 'Narrative Design' },
+          { th: 'บาลานซ์เกมและระบบเศรษฐกิจ', en: 'Game Balancing & Economy' },
+          { th: 'จัดทำเอกสารและวางแผนงาน', en: 'Documentation & Planning' }
         ]
       },
       {
         title: { th: 'เครื่องมือ', en: 'Tools' },
-        items: ['Yarn Spinner', 'Spine 2D', 'Excel / Sheets', 'Steam (Steamworks)']
+        items: ['Figma', 'Unity', 'Yarn Spinner', 'Canva', 'Adobe Photoshop', 'Adobe Illustrator', 'Adobe Premiere Pro', 'Adobe Lightroom', 'Docs']
       }
     ]
   },
 
   /* ---------- ผลงาน / Projects ----------
-     หน้าผลงานแต่ละชิ้นเรียงตามดีไซน์ใน Figma:
-       รูป/วิดีโอ (media) → ชื่อ → สถานะ + ช่วงเวลา + บทบาท → คำอธิบาย (description)
-       → รายการ "ทำอะไรบ้าง" (did) → ปุ่มลิงก์เกม (gameLink) + ปุ่มลิงก์อื่นๆ (links)
+     การ์ดหน้า Work ใช้: cover (รูปปก), title, role
+     หน้าผลงาน (กดเข้าไป) ใช้: media/cover → title → status + period → role → description → did → gameLink + links
 
-     media: { type:'image', src:'images/x.jpg', caption:{...} }
-            { type:'youtube', id:'VIDEO_ID' }
-            { type:'video', src:'images/clip.mp4' }
-       ใส่ได้หลายชิ้น (ดีไซน์ออกแบบไว้ 6 ช่อง) ชิ้นแรกเป็นภาพใหญ่ ที่เหลือเป็นภาพเล็ก กดแล้วสลับขึ้นมาเป็นภาพใหญ่
-       ถ้าไม่ใส่ media จะใช้ cover เป็นภาพเดียว                                          */
+     รูป: ใส่ไฟล์ในโฟลเดอร์ images/ ให้ชื่อตรงกับ cover (ยังไม่มีไฟล์ = ขึ้นกรอบว่าง)
+     media: { type:'image', src:'images/x.jpg' } | { type:'youtube', id:'VIDEO_ID' } | { type:'video', src:'images/clip.mp4' }
+       ชิ้นแรกเป็นภาพใหญ่ ที่เหลือเป็นภาพเล็ก (ไม่ใส่ media = ใช้ cover เป็นภาพใหญ่)                 */
   projects: [
     {
-      id: 'bar-410',                                  // ใช้ใน URL เช่น  yoursite.com/#p-bar-410
+      id: 'bar-410',                                  // ใช้ในลิงก์ เช่น  .../#p-bar-410
       title: { th: 'Bar 410', en: 'Bar 410' },
-      tag: { th: 'เกมเล่าเรื่อง 2.5D แบบ Point-and-Click', en: '2.5D Point-and-Click Narrative Game' },
+      role: { th: 'เกมดีไซเนอร์ / นักเขียน', en: 'Game Designer / Writer' },
       status: { th: 'กำลังพัฒนา', en: 'Ongoing' },
       period: { th: '2025–ปัจจุบัน', en: '2025–Now' },
-      role: { th: 'เกมดีไซเนอร์', en: 'Game Designer' },
-      summary: {                                      // ข้อความสั้นบนการ์ดหน้าแรก
-        th: 'เกมเล่าเรื่องในบาร์เล็กๆ ชนบทยุโรป ผู้เล่นเป็นบาร์เทนเดอร์มือใหม่ที่ได้ทำความรู้จักลูกค้าประจำ 8 คนตลอดหลายวันในเกม',
-        en: 'A narrative game set in a small European countryside bar. You are a new bartender getting to know eight regulars over several in-game days.'
-      },
-      cover: 'images/bar410-cover.jpg',                // ✏️ รูปปก (ไม่มีไฟล์ก็ไม่เป็นไร จะขึ้นกรอบว่าง)
-      media: [
-        // { type: 'image', src: 'images/bar410-01.jpg', caption: { th: 'ฉากในบาร์', en: 'Bar scene' } },
-        // { type: 'youtube', id: 'XXXXXXXXXXX' },
-      ],
-      description: [                                  // แต่ละก้อนคือ 1 ย่อหน้า
+      cover: 'images/bar-410-cover.jpg',
+      media: [],
+      description: [
         {
-          th: 'เกมเล่าเรื่องในบาร์เล็กๆ ชนบทยุโรป แรงบันดาลใจจาก Coffee Talk และ VA-11 Hall-A ผู้เล่นเป็นบาร์เทนเดอร์มือใหม่ที่ได้รู้จักตัวละคร 8 คน แต่ละคนมีเบื้องหลัง น้ำเสียง และกลไกป้องกันตัวเองที่ต่างกัน มีทั้งตอนจบแบบ Best End และ Normal End ผ่านโครงสร้างข้ามเวลาหนึ่งปี',
-          en: 'A narrative game set in a small European countryside bar, inspired by Coffee Talk and VA-11 Hall-A. You play a new bartender meeting eight characters, each with a distinct backstory, voice and defense mechanism, with Best End and Normal End outcomes built on a one-year time skip.'
-        },
-        {
-          th: 'ตอนนี้เดโมครอบคลุมวันที่ 1–5 บทสนทนาของวันที่ 1 เขียนเสร็จแล้ว',
-          en: 'The demo currently covers Days 1–5, and the Day 1 dialogue is written.'
+          th: 'Bar 410 เป็นเกมจำลองชีวิตแนวเล่าเรื่องแบบ point-and-click บรรยากาศสบายๆ ที่ผู้เล่นได้เป็นบาร์เทนเดอร์มือใหม่ที่มาเปิดร้านในเมืองชนบทเงียบสงบ ไม่มีอะไรต้องรีบ มีแค่เสียงแก้วกระทบกันเบาๆ เครื่องดื่มที่ผสมอย่างตั้งใจ และคนแปลกหน้าที่ค่อยๆ กลายเป็นหน้าคุ้นเคย เบื้องหลังค็อกเทลทุกแก้วคือบทสนทนาที่รออยู่ และเบื้องหลังทุกบทสนทนาคือเรื่องราวชิ้นเล็กๆ ของใครสักคน',
+          en: 'Bar 410 is a cozy point-and-click narrative simulation where you step into the life of a new bartender opening shop in a quiet rural town. There’s no rush here — just the soft clink of glasses, the pour of a well-made drink, and the strangers who slowly become familiar faces. Behind every cocktail is a conversation waiting to happen, and behind every conversation, a small piece of someone’s story.'
         }
       ],
-      did: [                                          // "ทำอะไรบ้าง" — ทีละข้อ
-        { th: 'ออกแบบเนื้อเรื่องและตัวละครทั้ง 8 ตัว: เบื้องหลัง น้ำเสียง กลไกป้องกันตัวเอง และตอนจบ', en: 'Narrative design and eight characters: backstories, voice, defense mechanisms and endings' },
-        { th: 'ออกแบบระบบทำค็อกเทล: สัดส่วน 10 ส่วน มินิเกม Shaking/Stirring กลไกน้ำแข็ง และระบบ Perfect/Acceptable/Fail', en: 'Cocktail crafting system: 10-part split, Shaking/Stirring mini-games, ice mechanic and Perfect/Acceptable/Fail rating' },
-        { th: 'เขียนบทสนทนาด้วย Yarn Spinner พร้อมกำหนดรูปแบบการตั้งชื่อ node และแท็กบรรทัดให้นักเขียนกับโปรแกรมเมอร์ใช้ร่วมกัน', en: 'Dialogue in Yarn Spinner with a node-naming and line-tagging format shared by writers and programmers' },
-        { th: 'วางแผน Roadmap ของโปรเจกต์', en: 'Project roadmap planning' }
+      did: [
+        { th: 'ออกแบบระบบหลักของเกม', en: 'Core Systems Design' },
+        { th: 'ออกแบบเรื่องเล่า', en: 'Narrative Design' },
+        { th: 'บริหารโปรเจกต์และพิตช์งาน', en: 'Project Management & Pitching' }
       ],
-      gameLink: { url: '' },                          // ✏️ ลิงก์เกม (เช่น Steam / itch.io) — ว่างไว้ = ปุ่มสีจาง กดไม่ได้
-      links: [                                        // ✏️ ปุ่มลิงก์อื่นๆ — ถ้าไม่ใส่ url จะไม่แสดงปุ่ม
-        { label: { th: 'ลิงก์ Figma', en: 'Link to Figma' }, url: '' },
-        { label: { th: 'ลิงก์ GDD',   en: 'Link to GDD'   }, url: '' }
+      gameLink: { url: 'https://phuree11.itch.io/project-bar-410' },
+      links: [
+        { label: 'GDD',            url: 'https://app.notion.com/p/Bar-410-Game-Design-Document-3ebbecb3f0648012bf61e84d90ccebc9?source=copy_link' },
+        { label: 'Sheet',          url: 'https://docs.google.com/spreadsheets/d/1CCscgwxqSdEsZWyBZFZdHA0tSppedTwJfxKvU2vkthU/edit?usp=sharing' },
+        { label: 'Figma Board',    url: 'https://www.figma.com/board/Y1cde8wBC0Sa3JujJFsggZ/Project-Cocktails?node-id=0-1&p=f&t=oTZvQ8UMeoYZ8Sku-0' },
+        { label: 'Figma Design',   url: 'https://www.figma.com/design/w3rLXX1m0Vauw6uJx1GATK/Cocktails-is-a-game?node-id=0-1&p=f&t=YdphXCMmvWRWUG2K-0' }
       ]
     },
 
     {
-      id: 'project-02',
-      title: { th: 'ชื่อผลงานที่ 2', en: 'Project Two' },
-      tag: { th: 'ตัวอย่าง — แก้ไขที่ content.js', en: 'SAMPLE — edit in content.js' },
-      status: { th: 'เสร็จสมบูรณ์', en: 'Completed' },
-      period: { th: '2025', en: '2025' },
-      role: { th: 'บทบาทของคุณ', en: 'Your role' },
-      summary: {
-        th: 'เขียนสรุป 1–2 ประโยค: เกมนี้คืออะไร และคุณแก้ปัญหาอะไรในฐานะดีไซเนอร์',
-        en: 'One or two sentences: what the game is, and which design problem you solved.'
-      },
-      cover: 'images/project02-cover.jpg',
+      id: 'photo-project',
+      title: { th: 'Photo Project', en: 'Photo Project' },
+      role: { th: 'เกมดีไซเนอร์ / โปรแกรมเมอร์', en: 'Game Designer / Programmer' },
+      status: { th: 'กำลังพัฒนา', en: 'Ongoing' },
+      period: { th: '2026–ปัจจุบัน', en: '2026–Now' },
+      cover: 'images/photo-project-cover.jpg',
       media: [],
       description: [
-        { th: 'อธิบายเกม ปัญหาที่เจอ และผลลัพธ์ของการออกแบบ', en: 'Describe the game, the problem, and the result of your design.' }
+        {
+          th: 'เกมสำรวจและถ่ายภาพมุมมองบุคคลที่สาม ผู้เล่นเดินสำรวจสภาพแวดล้อมเพื่อเฝ้าสังเกตและบันทึกสิ่งมีชีวิตต่างๆ ใช้กลไกการลอบเข้าใกล้สัตว์โดยไม่ให้มันตกใจ แล้วถ่ายภาพเพื่อปลดล็อกและเติมข้อมูลในสมุดบันทึก วงจรการเล่นหลักผสมการสำรวจแบบผ่อนคลาย การสังเกตสิ่งมีชีวิตอย่างมีกลยุทธ์ และความภูมิใจที่ได้สร้างคู่มือภาคสนามให้สมบูรณ์',
+          en: 'A third-person exploration and photography game where players navigate the environment to observe and document various creatures. By utilizing stealth mechanics to safely approach wildlife without startling them, players capture photographs to unlock and complete detailed entries in their Journal. The core gameplay loop blends relaxed exploration, strategic creature observation, and the rewarding progression of building a comprehensive field guide.'
+        }
       ],
       did: [
-        { th: 'สิ่งที่คุณทำข้อที่ 1', en: 'What you did, item 1' },
-        { th: 'สิ่งที่คุณทำข้อที่ 2', en: 'What you did, item 2' }
+        { th: 'ออกแบบระบบหลักของเกม', en: 'Core System Design' },
+        { th: 'เขียนโปรแกรมเกมเพลย์', en: 'Gameplay Programming' },
+        { th: 'ออกแบบเสียง', en: 'Sound Design' }
       ],
-      gameLink: { url: '' },
-      links: []
+      gameLink: { url: '', label: { th: 'กำลังพัฒนา', en: 'In development' } },
+      links: [
+        { label: 'Figma Board', url: 'https://www.figma.com/board/5tI37eupG6tLNKPkrgchQR/Project-The-Photo?node-id=733-808&t=QfjcBPKKRD8LsBni-0' }
+      ]
     },
 
     {
-      id: 'project-03',
-      title: { th: 'ชื่อผลงานที่ 3', en: 'Project Three' },
-      tag: { th: 'ตัวอย่าง — แก้ไขที่ content.js', en: 'SAMPLE — edit in content.js' },
-      status: { th: 'ต้นแบบ', en: 'Prototype' },
-      period: { th: '2025', en: '2025' },
-      role: { th: 'บทบาทของคุณ', en: 'Your role' },
-      summary: {
-        th: 'ผลงานชิ้นที่ 3 อาจเป็น game jam, prototype หรือเอกสารดีไซน์ (GDD) ก็ได้',
-        en: 'A third piece: a game jam entry, a prototype, or a design document (GDD).'
-      },
-      cover: 'images/project03-cover.jpg',
+      id: 'somtum-anomaly',
+      title: { th: 'Somtum Anomaly', en: 'Somtum Anomaly' },
+      role: { th: 'ออกแบบเกม / ออกแบบเสียง', en: 'Game Design / Sound Design' },
+      status: { th: 'เสร็จแล้ว', en: 'Done' },
+      period: { th: '2026', en: '2026' },
+      cover: 'images/somtum-anomaly-cover.jpg',
       media: [],
       description: [
-        { th: 'อธิบายสั้นๆ ว่าคุณทำอะไร', en: 'Briefly explain what you did.' }
+        {
+          th: 'Somtum Anomaly เป็นเกมสยองขวัญแนวสังเกตความผิดปกติ ในบรรยากาศชวนขนลุกของร้านส้มตำริมทางแบบไทย ผู้เล่นต้องคอยจับตาสิ่งรอบตัวเพื่อหาความผิดปกติแปลกประหลาดที่ซ่อนอยู่ในร้านที่ดูธรรมดา ถ้ามีอะไรผิดธรรมชาติเกิดขึ้น ต้องรายงานหรือรับมือทันทีเพื่อเอาชีวิตรอดจนจบกะ',
+          en: 'Somtum Anomaly is a psychological observation horror game set in the unsettling atmosphere of a local Thai street food stall. Players must carefully monitor their surroundings for bizarre, terrifying anomalies hidden within the seemingly mundane environment of a Somtum shop. If anything unnatural occurs, you must report or react to it immediately to survive your shift.'
+        }
       ],
       did: [
-        { th: 'สิ่งที่คุณทำ', en: 'What you did' }
+        { th: 'ออกแบบเกมเพลย์', en: 'Gameplay Design' },
+        { th: 'ออกแบบเสียง', en: 'Sound Design' }
       ],
-      gameLink: { url: '' },
+      gameLink: { url: 'https://www.roblox.com/games/79399613552695/Somtum-Anomaly', label: { th: 'เล่นบน Roblox', en: 'Play on Roblox' } },
+      links: [
+        { label: 'Figma Board', url: 'https://www.figma.com/board/z4plj1JuLbWpSvYOPvvGUI/Somtum-Anomaly?node-id=364-347&t=5nVpHw542Y2koI3R-0' }
+      ]
+    },
+
+    {
+      id: 'itim-for-mom',
+      title: { th: 'ITIM FOR MOM', en: 'ITIM FOR MOM' },
+      role: { th: 'ออกแบบเกม / ออกแบบเสียง', en: 'Game Design / Sound Design' },
+      status: { th: 'เสร็จแล้ว', en: 'Done' },
+      period: { th: '2026 · Thailand Summer Jam 2026', en: '2026 · Thailand Summer Jam 2026' },
+      cover: 'images/itim-for-mom-cover.jpg',
+      media: [],
+      description: [
+        {
+          th: 'ITIM FOR MOM เป็นเกมแพลตฟอร์ม 2D แนวอาร์เคดสายฮา สร้างในงาน Thailand Summer Jam 2026 ผู้เล่นต้องฝ่าแดดร้อนเปรี้ยงไปซื้อไอศกรีมกลับมาให้แม่ ต้องรีบก่อนไอศกรีมละลาย และห้ามทำให้แม่โกรธเด็ดขาด',
+          en: 'ITIM FOR MOM is a comedic 2D arcade platformer created for the Thailand Summer Jam 2026. Players must brave the scorching sun on a critical mission to buy and deliver ice cream to Mom. You must hurry before it melts and avoid making Mom angry at all costs.'
+        }
+      ],
+      did: [
+        { th: 'ออกแบบเกมเพลย์', en: 'Gameplay Design' },
+        { th: 'ออกแบบด่าน', en: 'Map Design' },
+        { th: 'ออกแบบเสียง', en: 'Sound Design' }
+      ],
+      gameLink: { url: 'https://dxrksom.itch.io/itim-for-mom' },
+      links: [
+        { label: 'Figma Design', url: 'https://www.figma.com/design/Kvo2zC1PJi1VDp4gXmeOYb/SUMMER-GAMEJAM-2026?node-id=0-1&t=Dv0RltRFuV9nRZqT-1' }
+      ]
+    },
+
+    {
+      id: 'no-im-not-a-fox',
+      title: { th: 'No, I’m Not A Fox', en: 'No, I’m Not A Fox' },
+      role: { th: 'ออกแบบเกม / ออกแบบเสียง', en: 'Game Design / Sound Design' },
+      status: { th: 'เสร็จแล้ว', en: 'Done' },
+      period: { th: '2026 · Global Game Jam 2026 Chiang Mai', en: '2026 · Global Game Jam 2026 Chiang Mai' },
+      cover: 'images/no-im-not-a-fox-cover.jpg',
+      media: [],
+      description: [
+        {
+          th: 'No, I’m Not A Fox เป็นต้นแบบเกมสยองขวัญจิตวิทยาและ role-playing แบบ point-and-click สร้างในงาน Global Game Jam 2026: Chiang Mai ผู้เล่นรับบทคนย่างและเสิร์ฟอาหารในขบวนแห่จิ้งจอก Oji ช่วงเวลาที่วิญญาณโบราณออกมาเดินท่อง ต้องสังเกตลูกค้าให้ดีเพื่อหาจิ้งจอกที่แฝงตัวมา เสิร์ฟผิดออร์เดอร์ให้วิญญาณอาจถึงตาย',
+          en: 'No, I’m Not A Fox is a point-and-click psychological horror and role-playing prototype created for the Global Game Jam 2026: Chiang Mai. You play as someone grilling and serving food during the Oji Fox Parade, a time when ancient spirits roam. You must carefully observe your customers to identify disguised foxes hidden among them. Serving the wrong order to a spirit could result in a fatal outcome.'
+        }
+      ],
+      did: [
+        { th: 'ออกแบบเกมเพลย์', en: 'Gameplay Design' },
+        { th: 'ออกแบบเสียง', en: 'Sound Design' }
+      ],
+      gameLink: { url: 'https://dxrksom.itch.io/no-im-not-a-fox' },
+      links: [
+        { label: 'Canva Design', url: 'https://canva.link/bdllzc62o443m9v' }
+      ]
+    },
+
+    {
+      id: 'autobahn',
+      title: { th: 'Autobahn', en: 'Autobahn' },
+      role: { th: 'ออกแบบเกม / ออกแบบเสียง', en: 'Game Design / Sound Design' },
+      status: { th: 'เสร็จแล้ว', en: 'Done' },
+      period: { th: '2025 · Thailand Summer Jam 2025', en: '2025 · Thailand Summer Jam 2025' },
+      cover: 'images/autobahn-cover.jpg',
+      media: [],
+      description: [
+        {
+          th: 'Autobahn เป็นเกมพัซเซิล-จำลองสถานการณ์ 2D สายฮา สร้างในงาน Thailand Summer Jam 2025 ผู้เล่นเป็นช่างซ่อมรถที่ต้องติดสอยห้อยตามไปทริปขับรถเที่ยว เพื่อคอยซ่อมรถตลอดทาง',
+          en: 'Autobahn is a comedic 2D puzzle-simulation game created for the Thailand Summer Jam 2025. You play from the perspective of a car mechanic who must go along on a road trip specifically to fix cars along the way.'
+        }
+      ],
+      did: [
+        { th: 'ออกแบบเกมเพลย์', en: 'Gameplay Design' },
+        { th: 'ออกแบบเสียง', en: 'Sound Design' }
+      ],
+      gameLink: { url: 'https://dxrksom.itch.io/autobahn' },
       links: []
     }
   ],
 
   /* ---------- ช่องทางติดต่อ / Contact ----------
-     ⚠️ เปลี่ยนค่าตัวอย่างเหล่านี้ก่อนเผยแพร่จริง! */
+     แต่ละกลุ่ม = หัวข้อ + แถว (ไม่มีแถว = ไม่แสดงกลุ่ม)
+     แถว: { label: 'ชื่อช่องทาง', value: 'ข้อความที่โชว์', url: 'ลิงก์' }  — ไม่ใส่ url = แถวธรรมดา กดไม่ได้ */
   contact: {
-    /* แต่ละกลุ่ม = หัวข้อ 1 อัน + แถวช่องทางติดต่อ (ไม่มีแถว = ไม่แสดงกลุ่มนั้น)
-       แถว: { label: 'ชื่อช่องทาง', value: 'ข้อความที่โชว์', url: 'ลิงก์' }            */
     groups: [
       {
         title: { th: 'ติดต่องาน', en: 'For Work' },
         items: [
-          { label: 'Email',    value: 'Phuree11@gmail.com',        url: 'mailto:Phuree11@gmail.com' },
-          { label: 'LinkedIn', value: 'linkedin.com/in/your-name', url: 'https://linkedin.com/in/your-name' },  // ✏️ แก้หรือลบ
-          { label: 'Itch.io',  value: 'your-name.itch.io',         url: 'https://your-name.itch.io' }            // ✏️ แก้หรือลบ
+          { label: 'Email',    value: 'Phuree11@gmail.com',   url: 'mailto:Phuree11@gmail.com' },
+          { label: 'Phone',    value: '+66 97 996 8141',      url: 'tel:+66979968141' },
+          { label: 'LinkedIn', value: 'Phuree Sirikunchukit', url: 'https://www.linkedin.com/in/%E0%B8%A0%E0%B8%B9%E0%B8%A3%E0%B8%B5-%E0%B8%A8%E0%B8%B4%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B8%E0%B8%A5%E0%B8%8A%E0%B8%B9%E0%B8%81%E0%B8%B4%E0%B8%88-205749341/' },
+          { label: 'Itch.io',  value: 'phuree11.itch.io',     url: 'https://phuree11.itch.io/' }
         ]
       },
       {
         title: { th: 'ส่วนตัว', en: 'Personal' },
         items: [
-          /* { label: 'Facebook', value: '...', url: 'https://facebook.com/...' },
-             { label: 'IG',       value: '@...', url: 'https://instagram.com/...' },
-             { label: 'Line',     value: '...',  url: 'https://line.me/ti/p/~...' } */
+          { label: 'Facebook', value: 'ภูรี ศิริกุลชูกิจ' },          // ✏️ ใส่ url ถ้าอยากให้กดได้
+          { label: 'IG',       value: 'Phuree11',  url: 'https://www.instagram.com/phuree11/' },
+          { label: 'Discord',  value: 'phuree' }
         ]
       }
     ]

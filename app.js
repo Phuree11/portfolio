@@ -49,7 +49,7 @@
     $('#about-skills').innerHTML = S.about.skills.map((g) => `
       <div class="a-group">
         <h3>${esc(t(g.title))}</h3>
-        <ul>${g.items.map((it) => `<li>${esc(t(it))}</li>`).join('')}</ul>
+        <ul${g.items.length > 6 ? ' class="two"' : ''}>${g.items.map((it) => `<li>${esc(t(it))}</li>`).join('')}</ul>
       </div>`).join('');
 
     const list = projects();
@@ -66,9 +66,11 @@
       <div class="ct-group">
         <h3 class="ct-title">${esc(t(g.title))}</h3>
         <ul class="ct-list">${g.items.map((c) => `
-          <li><a href="${esc(safeUrl(c.url))}" target="_blank" rel="noopener">
-            <span class="k">${esc(c.label)}</span><span class="v">${esc(c.value || '')}</span><span class="ar" aria-hidden="true">↗</span>
-          </a></li>`).join('')}
+          <li>${c.url
+            ? `<a href="${esc(safeUrl(c.url))}"${/^(mailto|tel):/i.test(c.url) ? '' : ' target="_blank" rel="noopener"'}>
+                <span class="k">${esc(c.label)}</span><span class="v">${esc(c.value || '')}</span><span class="ar" aria-hidden="true">↗</span></a>`
+            : `<div class="row"><span class="k">${esc(c.label)}</span><span class="v">${esc(c.value || '')}</span><span class="ar"></span></div>`}
+          </li>`).join('')}
         </ul>
       </div>`).join('');
   }
@@ -244,6 +246,12 @@
   }, true);
 
   /* ---------- start ---------- */
+  /* กดรีเฟรช = กลับไปหน้าเปิดเสมอ (ลิงก์ตรงอย่าง #p-bar-410 ที่เปิดครั้งแรกยังใช้ได้) */
+  try {
+    const nav = performance.getEntriesByType('navigation')[0];
+    if (nav && nav.type === 'reload' && location.hash) history.replaceState(null, '', location.pathname + location.search);
+  } catch (_) { /* ignore */ }
+
   buildSpace();
   renderChrome();
   renderPages();

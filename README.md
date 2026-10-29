@@ -47,15 +47,15 @@
 ## ปุ่มที่ 4 บนเมนู (เช่น Resume / CV)
 ใน `profile` ปลด comment บรรทัด `cv: { ... }` แล้วใส่ลิงก์ ถ้าไม่ใส่จะไม่แสดงปุ่ม
 
-## ก่อนเผยแพร่ ต้องเปลี่ยน!
-- ส่วน `contact` ที่ยังเป็น `your-name` (LinkedIn / Itch.io)
-- ผลงานตัวอย่าง `project-02`, `project-03` (แก้หรือลบ)
-- เช็คว่าข้อมูลของ Bar 410 ที่ใส่ไว้ เปิดเผยต่อสาธารณะได้
+## รูปปกผลงาน
+ใส่ไฟล์ในโฟลเดอร์ `images/` ตามชื่อนี้ (ยังไม่มีไฟล์ = ขึ้นกรอบว่าง):
+`bar-410-cover.jpg`, `photo-project-cover.jpg`, `somtum-anomaly-cover.jpg`,
+`itim-for-mom-cover.jpg`, `no-im-not-a-fox-cover.jpg`, `autobahn-cover.jpg`
 
 ## อัปเดตเว็บบน GitHub Pages
 1. เข้า repo → ถ้าแก้ไฟล์เดียว: กดไฟล์นั้น → ไอคอนดินสอ → แก้ → **Commit changes**
 2. ถ้าอัปโหลดไฟล์ทั้งชุดใหม่: **Add file → Upload files** ลากไฟล์ `index.html`, `style.css`, `app.js`, `content.js`, `README.md` และโฟลเดอร์ **`fonts`** และ **`images`** (ถ้ามีรูป) ไปวาง แล้ว Commit (ไฟล์ชื่อซ้ำจะถูกแทนที่)
-3. ถ้าแก้ `style.css`/`app.js`/`content.js` ให้เปลี่ยนเลข `?v=6` ใน `index.html` เป็นเลขถัดไป เพื่อให้เบราว์เซอร์โหลดไฟล์ใหม่
+3. ถ้าแก้ `style.css`/`app.js`/`content.js` ให้เปลี่ยนเลข `?v=7` ใน `index.html` เป็นเลขถัดไป เพื่อให้เบราว์เซอร์โหลดไฟล์ใหม่
 4. รอ 1–2 นาที แล้วกด Ctrl+F5
 
 > โฟลเดอร์ `fonts` ต้องอัปโหลดด้วย ไม่งั้นฟอนต์จะเพี้ยน
