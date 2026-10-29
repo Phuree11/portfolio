@@ -27,7 +27,7 @@ window.SITE = {
   about: {
     bio: [                                            // ✏️ แต่ละก้อนคือ 1 ย่อหน้า
       {
-        th: 'สวัสดีครับ ผมเป็นนักศึกษาปี 3 สาขา Game Design วิทยาลัยศิลปะ สื่อ และเทคโนโลยี (CAMT) มหาวิทยาลัยเชียงใหม่ ผมอยากสร้างเกมที่ผู้เล่นสนุกจริงๆ และเล่าเรื่องที่ผมรักจะเล่า เพื่อส่งต่อความรู้สึกตื่นตาตื่นใจแบบเดียวกับที่ผมได้รับตอนก้าวเข้าสู่โลกของวิดีโอเกมครั้งแรก',
+        th: 'สวัสดีครับ ผมเป็นนักศึกษาปี 3 สาขา Game Design วิทยาลัยศิลปะ สื่อ และเทคโนโลยี (CAMT) มหาวิทยาลัยเชียงใหม่ ผมอยากจะสร้างเกมที่ผู้เล่นสนุกกับการเล่นและได้เล่าเรื่องที่ผมอยากจะเล่า เพื่อส่งต่อความรู้สึกตื่นตาตื่นใจแบบเดียวกับที่ผมได้รับตอนก้าวเข้าสู่โลกของวิดีโอเกมครั้งแรก',
         en: 'Hi, I’m a third-year Game Design student at CAMT, Chiang Mai University. Driven by a passion to craft games that players truly enjoy and stories I love to tell, I want to recreate that same spark of wonder I felt the very first time I stepped into the world of video games.'
       }
     ],
