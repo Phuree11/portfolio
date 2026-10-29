@@ -63,8 +63,13 @@ window.SITE = {
       role: { th: 'เกมดีไซเนอร์ / นักเขียน', en: 'Game Designer / Writer' },
       status: { th: 'กำลังพัฒนา', en: 'Ongoing' },
       period: { th: '2025–ปัจจุบัน', en: '2025–Now' },
-      cover: 'images/bar-410-cover.jpg',
-      media: [],
+      cover: 'images/bar-410-cover.webp',
+      media: [
+        { type: 'image', src: 'images/bar-410-1.webp' },
+        { type: 'image', src: 'images/bar-410-2.webp' },
+        { type: 'image', src: 'images/bar-410-3.webp' },
+        { type: 'image', src: 'images/bar-410-4.webp' }
+      ],
       description: [
         {
           th: 'Bar 410 เป็นเกมจำลองชีวิตแนวเล่าเรื่องแบบ point-and-click บรรยากาศสบายๆ ที่ผู้เล่นได้เป็นบาร์เทนเดอร์มือใหม่ที่มาเปิดร้านในเมืองชนบทเงียบสงบ ไม่มีอะไรต้องรีบ มีแค่เสียงแก้วกระทบกันเบาๆ เครื่องดื่มที่ผสมอย่างตั้งใจ และคนแปลกหน้าที่ค่อยๆ กลายเป็นหน้าคุ้นเคย เบื้องหลังค็อกเทลทุกแก้วคือบทสนทนาที่รออยู่ และเบื้องหลังทุกบทสนทนาคือเรื่องราวชิ้นเล็กๆ ของใครสักคน',
@@ -91,8 +96,14 @@ window.SITE = {
       role: { th: 'เกมดีไซเนอร์ / โปรแกรมเมอร์', en: 'Game Designer / Programmer' },
       status: { th: 'กำลังพัฒนา', en: 'Ongoing' },
       period: { th: '2026–ปัจจุบัน', en: '2026–Now' },
-      cover: 'images/photo-project-cover.jpg',
-      media: [],
+      cover: 'images/photo-project-cover.webp',
+      media: [
+        { type: 'image', src: 'images/photo-project-1.webp' },
+        { type: 'image', src: 'images/photo-project-2.webp' },
+        { type: 'image', src: 'images/photo-project-3.webp' },
+        { type: 'image', src: 'images/photo-project-4.webp' },
+        { type: 'image', src: 'images/photo-project-5.webp' }
+      ],
       description: [
         {
           th: 'เกมสำรวจและถ่ายภาพมุมมองบุคคลที่สาม ผู้เล่นเดินสำรวจสภาพแวดล้อมเพื่อเฝ้าสังเกตและบันทึกสิ่งมีชีวิตต่างๆ ใช้กลไกการลอบเข้าใกล้สัตว์โดยไม่ให้มันตกใจ แล้วถ่ายภาพเพื่อปลดล็อกและเติมข้อมูลในสมุดบันทึก วงจรการเล่นหลักผสมการสำรวจแบบผ่อนคลาย การสังเกตสิ่งมีชีวิตอย่างมีกลยุทธ์ และความภูมิใจที่ได้สร้างคู่มือภาคสนามให้สมบูรณ์',
@@ -116,8 +127,15 @@ window.SITE = {
       role: { th: 'ออกแบบเกม / ออกแบบเสียง', en: 'Game Design / Sound Design' },
       status: { th: 'เสร็จแล้ว', en: 'Done' },
       period: { th: '2026', en: '2026' },
-      cover: 'images/somtum-anomaly-cover.jpg',
-      media: [],
+      cover: 'images/somtum-anomaly-cover.webp',
+      media: [
+        { type: 'image', src: 'images/somtum-anomaly-1.webp' },
+        { type: 'image', src: 'images/somtum-anomaly-2.webp' },
+        { type: 'image', src: 'images/somtum-anomaly-3.webp' },
+        { type: 'image', src: 'images/somtum-anomaly-4.webp' },
+        { type: 'image', src: 'images/somtum-anomaly-5.webp' },
+        { type: 'image', src: 'images/somtum-anomaly-6.webp' }
+      ],
       description: [
         {
           th: 'Somtum Anomaly เป็นเกมสยองขวัญแนวสังเกตความผิดปกติ ในบรรยากาศชวนขนลุกของร้านส้มตำริมทางแบบไทย ผู้เล่นต้องคอยจับตาสิ่งรอบตัวเพื่อหาความผิดปกติแปลกประหลาดที่ซ่อนอยู่ในร้านที่ดูธรรมดา ถ้ามีอะไรผิดธรรมชาติเกิดขึ้น ต้องรายงานหรือรับมือทันทีเพื่อเอาชีวิตรอดจนจบกะ',
@@ -140,8 +158,14 @@ window.SITE = {
       role: { th: 'ออกแบบเกม / ออกแบบเสียง', en: 'Game Design / Sound Design' },
       status: { th: 'เสร็จแล้ว', en: 'Done' },
       period: { th: '2026 · Thailand Summer Jam 2026', en: '2026 · Thailand Summer Jam 2026' },
-      cover: 'images/itim-for-mom-cover.jpg',
-      media: [],
+      cover: 'images/itim-for-mom-cover.webp',
+      media: [
+        { type: 'image', src: 'images/itim-for-mom-1.webp' },
+        { type: 'image', src: 'images/itim-for-mom-2.webp' },
+        { type: 'image', src: 'images/itim-for-mom-3.webp' },
+        { type: 'image', src: 'images/itim-for-mom-4.webp' },
+        { type: 'image', src: 'images/itim-for-mom-5.webp' }
+      ],
       description: [
         {
           th: 'ITIM FOR MOM เป็นเกมแพลตฟอร์ม 2D แนวอาร์เคดสายฮา สร้างในงาน Thailand Summer Jam 2026 ผู้เล่นต้องฝ่าแดดร้อนเปรี้ยงไปซื้อไอศกรีมกลับมาให้แม่ ต้องรีบก่อนไอศกรีมละลาย และห้ามทำให้แม่โกรธเด็ดขาด',
@@ -165,8 +189,13 @@ window.SITE = {
       role: { th: 'ออกแบบเกม / ออกแบบเสียง', en: 'Game Design / Sound Design' },
       status: { th: 'เสร็จแล้ว', en: 'Done' },
       period: { th: '2026 · Global Game Jam 2026 Chiang Mai', en: '2026 · Global Game Jam 2026 Chiang Mai' },
-      cover: 'images/no-im-not-a-fox-cover.jpg',
-      media: [],
+      cover: 'images/no-im-not-a-fox-cover.webp',
+      media: [
+        { type: 'image', src: 'images/no-im-not-a-fox-1.webp' },
+        { type: 'image', src: 'images/no-im-not-a-fox-2.webp' },
+        { type: 'image', src: 'images/no-im-not-a-fox-3.webp' },
+        { type: 'image', src: 'images/no-im-not-a-fox-4.webp' }
+      ],
       description: [
         {
           th: 'No, I’m Not A Fox เป็นต้นแบบเกมสยองขวัญจิตวิทยาและ role-playing แบบ point-and-click สร้างในงาน Global Game Jam 2026: Chiang Mai ผู้เล่นรับบทคนย่างและเสิร์ฟอาหารในขบวนแห่จิ้งจอก Oji ช่วงเวลาที่วิญญาณโบราณออกมาเดินท่อง ต้องสังเกตลูกค้าให้ดีเพื่อหาจิ้งจอกที่แฝงตัวมา เสิร์ฟผิดออร์เดอร์ให้วิญญาณอาจถึงตาย',
@@ -189,8 +218,13 @@ window.SITE = {
       role: { th: 'ออกแบบเกม / ออกแบบเสียง', en: 'Game Design / Sound Design' },
       status: { th: 'เสร็จแล้ว', en: 'Done' },
       period: { th: '2025 · Thailand Summer Jam 2025', en: '2025 · Thailand Summer Jam 2025' },
-      cover: 'images/autobahn-cover.jpg',
-      media: [],
+      cover: 'images/autobahn-cover.webp',
+      media: [
+        { type: 'image', src: 'images/autobahn-1.webp' },
+        { type: 'image', src: 'images/autobahn-2.webp' },
+        { type: 'image', src: 'images/autobahn-3.webp' },
+        { type: 'image', src: 'images/autobahn-4.webp' }
+      ],
       description: [
         {
           th: 'Autobahn เป็นเกมพัซเซิล-จำลองสถานการณ์ 2D สายฮา สร้างในงาน Thailand Summer Jam 2025 ผู้เล่นเป็นช่างซ่อมรถที่ต้องติดสอยห้อยตามไปทริปขับรถเที่ยว เพื่อคอยซ่อมรถตลอดทาง',

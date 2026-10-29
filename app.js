@@ -77,41 +77,70 @@
 
   /* ---------- space background ----------
      Positions come from the Figma slides (1920 x 1080).
-     c = orbit centre, r = radius, a = where the planet starts (degrees, 0 = right, 90 = down),
-     s = planet diameter, ring = halo diameter, pages = which pages show this orbit.
-     Orbits shared by two pages stay on screen while switching between them. */
+     ORBITS: c = orbit centre, r = radius, pages = which pages show it (shared orbits stay on screen between those pages)
+       planet: a = start angle (degrees, 0 = right, 90 = down), s = size (0 = no body),
+               ring = halo diameter, moons = [{ a, s }] small moons circling on the halo
+     STARS: x, y = centre, s = size; they twinkle (fade in and out) slowly */
   const ORBITS = [
-    { c: [954.5, 539.5], r: 322.5, pages: 'home',  planets: [{ a: -46.8, s: 33 }] },
-    { c: [954, 533],     r: 541,   pages: 'home',  planets: [{ a: 117.5, s: 56, ring: 102 }, { a: -1.2, s: 22 }] },
-    { c: [960, 555],     r: 873,   pages: 'home',  planets: [{ a: 197.4, s: 71 }] },
+    // opening
+    { c: [954.5, 539.5], r: 322.5, pages: 'home', planets: [{ a: -46.8, s: 33 }] },
+    { c: [954, 533],     r: 541,   pages: 'home', planets: [{ a: 117.5, s: 56, ring: 124, moons: [{ a: -89.5, s: 19 }] }, { a: -1.2, s: 22 }] },
+    { c: [960, 555],     r: 873,   pages: 'home', planets: [{ a: 197.4, s: 71 }] },
+    // about + work (+ project page)
     { c: [17.5, 1028.5], r: 322.5, pages: 'about work detail', planets: [{ a: -28.5, s: 33 }] },
     { c: [1620.5, 176.5], r: 378.5, pages: 'about work detail', planets: [{ a: 114, s: 22 }] },
+    // about
     { c: [1856.5, 762.5], r: 378.5, pages: 'about', planets: [{ a: 180, s: 28 }] },
-    { c: [373, 191],     r: 421,   pages: 'work',  planets: [{ a: -10.5, s: 22 }] },
+    { c: [665, 1015],    r: 199,   pages: 'about', planets: [{ a: -72.6, s: 20 }] },
+    { c: [754.5, 103.5], r: 322.5, pages: 'about', planets: [{ a: 19, s: 19 }] },
+    // work
+    { c: [373, 191],     r: 421,   pages: 'work', planets: [{ a: -10.5, s: 22 }] },
     { c: [1557.5, 972.5], r: 378.5, pages: 'work detail', planets: [{ a: 180, s: 28 }] },
-    { c: [532.5, 120.5], r: 326.5, pages: 'contact', planets: [{ a: 4.4, s: 17 }] },
-    { c: [362, 1080],    r: 362,   pages: 'contact', planets: [{ a: -28.5, s: 37 }] },
-    { c: [1551, 125],    r: 457,   pages: 'contact', planets: [{ a: 114, s: 27 }] },
-    { c: [2075.5, 846.5], r: 378.5, pages: 'contact', planets: [{ a: 180, s: 28 }] }
+    { c: [1073.5, 916.5], r: 322.5, pages: 'work', planets: [{ a: -28.1, s: 20, ring: 66, moons: [{ a: -19.5, s: 10 }] }] },
+    // contact
+    { c: [417, 211],     r: 392,   pages: 'contact', planets: [{ a: 3.8, s: 20 }] },
+    { c: [362, 1080],    r: 362,   pages: 'contact', planets: [{ a: -38.6, s: 37, ring: 119, moons: [{ a: -45.7, s: 16 }] }] },
+    { c: [1551, 125],    r: 457,   pages: 'contact', planets: [{ a: 113.4, s: 0, ring: 63, moons: [{ a: 129, s: 17 }, { a: -54, s: 13 }] }] },
+    { c: [2075.5, 846.5], r: 378.5, pages: 'contact', planets: [{ a: 180, s: 28 }] },
+    { c: [1518.5, 1079.5], r: 378.5, pages: 'contact', planets: [{ a: 180, s: 28 }] }
   ];
 
+  const STARS = {
+    home:    [[413, 801, 48], [1244.5, 169.5, 31], [794.5, 398.5, 31], [1303, 646, 56], [1649, 1034, 44], [391, 132, 44], [128, 540, 44], [1851.5, 204.5, 37]],
+    about:   [[174, 527, 56], [949, 822, 44], [993, 505, 44], [1500, 127, 44], [1734, 612, 44], [1427.5, 1000.5, 57], [741, 163, 28]],
+    'work detail': [[220.5, 711.5, 57], [628, 596, 42], [249, 93, 42], [1074, 144, 66], [1226, 565, 66], [819.5, 1027.5, 51], [1640.5, 800.5, 51]],
+    contact: [[387.5, 838.5, 51], [128.5, 556.5, 65], [653.5, 268.5, 47], [1788.5, 439.5, 47], [1352.5, 124.5, 47], [1352.5, 896.5, 47], [1219.5, 557.5, 73], [960, 730, 58]]
+  };
+
+  // a 4-point sparkle, 1 x 1, centred on 0,0
+  const SPARK = 'M0 -.5Q.06 -.06 .5 0Q.06 .06 0 .5Q-.06 .06 -.5 0Q-.06 -.06 0 -.5Z';
+
   function buildSpace() {
-    const svg = ORBITS.map((o, i) => {
+    const spin = (ox, oy, period, start, dir) => {
+      const s = dir === 'normal' ? start : -start;
+      const delay = -(((s % 360) + 360) % 360) / 360 * period;
+      return `style="transform-origin:${ox}px ${oy}px;animation-duration:${period}s;animation-delay:${delay.toFixed(2)}s;animation-direction:${dir}"`;
+    };
+    const orbits = ORBITS.map((o, i) => {
       const [cx, cy] = o.c;
-      const period = (70 * Math.pow(o.r / 400, 1.5)).toFixed(1);   // bigger orbit = slower, like real planets
+      const period = +(70 * Math.pow(o.r / 400, 1.5)).toFixed(1);   // bigger orbit = slower, like real planets
       const dir = i % 2 ? 'reverse' : 'normal';
       const planets = o.planets.map((p) => {
-        // start position = Figma position: a negative delay jumps the animation forward
-        const start = dir === 'normal' ? p.a : -p.a;
-        const delay = -(((start % 360) + 360) % 360) / 360 * period;
-        return `<g class="pl" style="transform-origin:${cx}px ${cy}px;animation-duration:${period}s;animation-delay:${delay.toFixed(2)}s;animation-direction:${dir}">
-          ${p.ring ? `<circle class="halo" cx="${cx + o.r}" cy="${cy}" r="${p.ring / 2}"/>` : ''}
-          <circle class="dot" cx="${cx + o.r}" cy="${cy}" r="${p.s / 2}"/>
+        const px = cx + o.r, py = cy;
+        const moons = (p.moons || []).map((m, k) =>
+          `<g class="pl" ${spin(px, py, 14 + k * 5, m.a - p.a, k % 2 ? 'reverse' : 'normal')}><circle class="dot" cx="${px + p.ring / 2}" cy="${py}" r="${m.s / 2}"/></g>`).join('');
+        return `<g class="pl" ${spin(cx, cy, period, p.a, dir)}>
+          ${p.ring ? `<circle class="halo" cx="${px}" cy="${py}" r="${p.ring / 2}"/>` : ''}
+          ${p.s ? `<circle class="dot" cx="${px}" cy="${py}" r="${p.s / 2}"/>` : ''}
+          ${moons}
         </g>`;
       }).join('');
       return `<g class="orbit" data-pages="${o.pages}"><circle class="ring" cx="${cx}" cy="${cy}" r="${o.r}"/>${planets}</g>`;
     }).join('');
-    $('#space').innerHTML = `<svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" focusable="false">${svg}</svg>`;
+    const stars = Object.entries(STARS).map(([pages, list]) => `<g class="orbit" data-pages="${pages}">${
+      list.map(([x, y, s], i) => `<path class="star" d="${SPARK}" transform="translate(${x} ${y}) scale(${s})" style="animation-duration:${(4 + (i * 1.7) % 4).toFixed(1)}s;animation-delay:-${((i * 2.3) % 5).toFixed(1)}s"/>`).join('')
+    }</g>`).join('');
+    $('#space').innerHTML = `<svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" focusable="false">${orbits}${stars}</svg>`;
   }
 
   function setSpace(page) {
@@ -138,7 +167,7 @@
     const thumbs = others.map(([m, i]) => {
       const label = isVideo(m) ? `▶ ${ui('detail.video')}` : ui('detail.phSmall');
       return `<button type="button" class="tile sm" data-i="${i}" data-ph="${esc(label)}" aria-label="${esc(t(m.caption) || label)}">${isVideo(m) ? '' : `<img src="${esc(m.src)}" alt="" loading="lazy">`}</button>`;
-    }).join('') + Array.from({ length: Math.max(0, 5 - others.length) },
+    }).join('') + Array.from({ length: list.length > 1 ? 0 : Math.max(0, 5 - others.length) },
       () => `<span class="tile empty" data-ph="${esc(ui('detail.phSmall'))}"></span>`).join('');
 
     const meta = [t(p.status), t(p.period)].filter(Boolean).map((v) => `<span>${esc(v)}</span>`).join('');
